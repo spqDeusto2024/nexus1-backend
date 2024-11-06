@@ -1,5 +1,5 @@
 .vscode
 mysql/data/*
 __pycache__
-app/mysql
+app/mysql/*
 myCredentials.properties
