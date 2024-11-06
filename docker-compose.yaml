@@ -2,13 +2,13 @@ version: '3.5'
 
 networks:
   test:
-    name: fastapi_example
+    name: nexus1-backend
 
 
 services:
   mysql_db:
     image: mysql:8.0.31
-    container_name: mysql-fastapi
+    container_name: mysql-nexus1
     volumes:
       - ./mysql/data:/var/lib/mysql
     ports:
@@ -16,9 +16,9 @@ services:
     networks:
       - test
     environment:
-      - MYSQL_DATABASE=fastapi
-      - MYSQL_USER=admin_db
-      - MYSQL_PASSWORD=admin_db
+      - MYSQL_DATABASE=nexus1
+      - MYSQL_USER=nexus1-admin
+      - MYSQL_PASSWORD=nexus1-password
       - MYSQL_ROOT_PASSWORD=toor
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
@@ -28,15 +28,15 @@ services:
       retries: 55
 
   fastapi:
-    image: fast-api-example:latest
-    container_name: fastapi
+    image: nexus1-backend:latest
+    container_name: nexus1-backend
     restart: always
     ports: 
       - 8000:8000
     networks:
       - test
     environment:
-      - MYSQL_URL=mysql://root:toor@mysql-fastapi:3306/fastapi
+      - MYSQL_URL=mysql://root:toor@mysql-nexus1:3306/nexus1-backend
     volumes:
       - ./app:/code/app
     depends_on:
