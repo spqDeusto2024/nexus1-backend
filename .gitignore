@@ -2,3 +2,4 @@
 mysql/data/*
 __pycache__
 app/mysql
+myCredentials.properties
