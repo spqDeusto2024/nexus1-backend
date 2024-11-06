@@ -29,7 +29,7 @@ services:
 
   fastapi:
     image: nexus1-backend:latest
-    container_name: fastapi
+    container_name: fastapi-nexus1
     restart: always
     ports: 
       - 8000:8000
@@ -42,3 +42,10 @@ services:
     depends_on:
       mysql_db:
         condition: service_healthy
+    x-develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /code/app
+        - action: rebuild
+          path: ./app/package.json
