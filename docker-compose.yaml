@@ -2,7 +2,7 @@ version: '3.5'
 
 networks:
   test:
-    name: nexus1-backend
+    name: nexus1-backend-project
 
 
 services:
@@ -10,7 +10,7 @@ services:
     image: mysql:8.0.31
     container_name: mysql-nexus1
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ./app/mysql/data:/var/lib/mysql
     ports:
       - 3306:3306
     networks:
@@ -29,17 +29,16 @@ services:
 
   fastapi:
     image: nexus1-backend:latest
-    container_name: nexus1-backend
+    container_name: fastapi
     restart: always
     ports: 
       - 8000:8000
     networks:
       - test
     environment:
-      - MYSQL_URL=mysql://root:toor@mysql-nexus1:3306/nexus1-backend
+      - MYSQL_URL=mysql://root:toor@mysql-nexus1:3306/nexus1
     volumes:
       - ./app:/code/app
     depends_on:
       mysql_db:
         condition: service_healthy
-    command: uvicorn app.main:app --host 0.0.0.0 --reload  # Este es el comando de recarga automática
