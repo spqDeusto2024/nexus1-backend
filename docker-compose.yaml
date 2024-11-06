@@ -42,3 +42,4 @@ services:
     depends_on:
       mysql_db:
         condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --reload  # Este es el comando de recarga automática
