@@ -6,4 +6,5 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, World!"}
+    # GENERATE CHANGES HERE TO PROVE SYNC STAGE
+    return {"message": "Hello, PEPE!"}
