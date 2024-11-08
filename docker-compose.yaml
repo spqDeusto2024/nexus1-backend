@@ -10,7 +10,7 @@ services:
     image: mysql:8.0.31
     container_name: mysql-nexus1
     volumes:
-      - ./app/mysql/data:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
     ports:
       - 3306:3306
     networks:
