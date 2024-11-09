@@ -13,6 +13,7 @@ import app.utils.vars as var
 app = FastAPI()
 nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
 shelterController = Shelter_Controller()
+dormitoryController = Dormitory_Controller()
 
 @app.on_event("startup")
 def startup():
@@ -50,7 +51,7 @@ def startup():
 
 
 @app.get('/shelter/healthz')
-async def healthz():
+async def shelter_healthz():
   return shelterController.healthz()
 
 @app.post('/shelter/create')
@@ -68,3 +69,24 @@ async def get_all_shelters():
 @app.post('/shelter/update')
 async def update_shelter(body: models.ShelterUpdate):
   return shelterController.update_shelter(body)
+
+
+@app.get('/dormitory/healthz')
+async def dormitory_healthz():
+  return dormitoryController.healthz()
+
+@app.post('/dormitory/create')
+async def create_dormitory(body: models.DormitoryCreate):
+  return dormitoryController.create_dormitory(body)
+
+@app.post('/dormitory/delete')
+async def delete_dormitory(body: models.DormitoryDelete):
+  return dormitoryController.delete_dormitory(body)
+  
+@app.get('/dormitory/get_all')
+async def get_all_dormitory():
+  return dormitoryController.get_all()
+
+@app.post('/dormitory/update')
+async def update_dormitory(body: models.DormitoryUpdate):
+  return dormitoryController.update_dormitory(body)
