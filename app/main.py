@@ -4,24 +4,28 @@ from typing import Union
 from app.mysql.mysql import Nexus1DataBase
 
 import app.utils.vars as var 
-import app.models.models.as modelos
 
 
-def iniciarBBDD() -> None:
-    nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
-    nexusDDBB.init_database()
-    print("llamado initialize")
-    return 
 
 
 app = FastAPI()
-iniciarBBDD()
+nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
+
+@app.on_event("startup")
+def startup():
+    try:
+        nexusDDBB.init_database()   
+        print("DDBB STARTED")
+    except Exception as e:
+        print("ERROR WHILE STARTING DDBB")
+        print(str(e))
+
+
 
 
 @app.get("/")
 def read_root():
     # GENERATE CHANGES HERE TO PROVE SYNC STAGE
-    print("pepero")
     return {"message": "Hello, Dartañan!"}
 
 @app.get("/prueba_manuel")

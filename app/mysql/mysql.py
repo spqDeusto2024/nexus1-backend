@@ -1,6 +1,9 @@
 import sqlalchemy as db
 from app.mysql.base import Base
+from app.mysql.models import *
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import inspect
+
 
 
 class Nexus1DataBase():
@@ -14,7 +17,10 @@ class Nexus1DataBase():
     """
     creates tables in database
     """
-    print("llamado metodo inciar database")
-    Base.metadata.create_all(self.engine)
+    inspector = inspect(self.engine)
+    if "administrators" not in inspector.get_table_names():
+        Base.metadata.create_all(self.engine)
+    else:
+        print("Tables already exists")
     return
     
