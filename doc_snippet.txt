@@ -1,0 +1,27 @@
+EXAMPLE FOR METHODS:
+def my_function(param1: str, param2: int) -> bool:
+    """
+    Descripción corta de la función.
+
+    Parámetros:
+        param1 (str): Descripción del primer parámetro.
+        param2 (int): Descripción del segundo parámetro.
+
+    Retorna:
+        bool: Descripción de lo que retorna la función.
+    """
+    pass
+EXAMPLE FOR CLASSES:
+class MyClass:
+    """
+    Descripción general de la clase.
+
+    Atributos:
+        attribute1 (str): Descripción del primer atributo.
+        attribute2 (int): Descripción del segundo atributo.
+    """
+    
+    def __init__(self, attribute1: str, attribute2: int):
+        self.attribute1 = attribute1
+        self.attribute2 = attribute2
+
