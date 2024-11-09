@@ -13,6 +13,18 @@ nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
 
 @app.on_event("startup")
 def startup():
+    """
+    This route gets called when firts GET is realized from the browser.
+    It prepares the databse creating all models defined in the project.
+    If some exception is catched it is pritned on terminal,if is not
+    prints on terminal that databse has succesfully launched.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
     try:
         nexusDDBB.init_database()   
         print("DDBB STARTED")

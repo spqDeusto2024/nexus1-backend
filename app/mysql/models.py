@@ -1,8 +1,23 @@
 from sqlalchemy import Column, Integer, String, Text, Boolean, Float, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from app.mysql.base import Base  # Asumimos que tienes una clase base de SQLAlchemy
+from app.mysql.base import Base  # Assuming you have a base class for SQLAlchemy
 
 class Tenant(Base):
+    """
+    Represents a tenant in the system.
+
+    Attributes:
+        id (int): The unique identifier of the tenant.
+        id_role (int): The role identifier of the tenant (ForeignKey).
+        id_dormitory (int): The dormitory identifier where the tenant stays (ForeignKey).
+        name (str): The name of the tenant.
+        surname (str): The surname of the tenant.
+        age (str): The age of the tenant.
+        status (bool): The current status of the tenant (active/inactive).
+        genre (str): The genre of the tenant.
+        created_at (DateTime): The timestamp when the tenant record was created.
+    """
+
     __tablename__ = "tenants"
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_role = Column(Integer, ForeignKey("roles.id"), nullable=True)
@@ -19,6 +34,17 @@ class Tenant(Base):
 
 
 class Role(Base):
+    """
+    Represents a role in the system.
+
+    Attributes:
+        id (int): The unique identifier of the role.
+        name (str): The name of the role.
+        description (str): A description of the role.
+        id_room_relationship (int): The room identifier associated with this role (ForeignKey).
+        created_at (DateTime): The timestamp when the role record was created.
+    """
+    
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
@@ -31,6 +57,20 @@ class Role(Base):
 
 
 class Room(Base):
+    """
+    Represents a room in the shelter system.
+
+    Attributes:
+        id (int): The unique identifier of the room.
+        id_shelter (int): The shelter identifier the room belongs to (ForeignKey).
+        name (str): The name of the room.
+        description (str): The description of the room.
+        capacity (int): The capacity of the room.
+        actual_tenant_number (int): The current number of tenants in the room.
+        availability (bool): The availability status of the room.
+        created_at (DateTime): The timestamp when the room record was created.
+    """
+
     __tablename__ = "rooms"
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_shelter = Column(Integer, ForeignKey("shelters.id"), nullable=False)
@@ -47,6 +87,20 @@ class Room(Base):
 
 
 class Dormitory(Base):
+    """
+    Represents a dormitory in the shelter system.
+
+    Attributes:
+        id (int): The unique identifier of the dormitory.
+        id_shelter (int): The shelter identifier the dormitory belongs to (ForeignKey).
+        name (str): The name of the dormitory.
+        description (str): The description of the dormitory.
+        capacity (int): The capacity of the dormitory.
+        actual_tenant_number (int): The current number of tenants in the dormitory.
+        availability (bool): The availability status of the dormitory.
+        created_at (DateTime): The timestamp when the dormitory record was created.
+    """
+
     __tablename__ = "dormitories"
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_shelter = Column(Integer, ForeignKey("shelters.id"), nullable=False)
@@ -62,6 +116,16 @@ class Dormitory(Base):
 
 
 class Administrator(Base):
+    """
+    Represents an administrator in the system.
+
+    Attributes:
+        id (int): The unique identifier of the administrator.
+        username (str): The username of the administrator.
+        password (str): The password for the administrator account.
+        created_at (DateTime): The timestamp when the administrator account was created.
+    """
+
     __tablename__ = "administrators"
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(255), unique=True, nullable=False)
@@ -70,6 +134,18 @@ class Administrator(Base):
 
 
 class ParameterRoom(Base):
+    """
+    Represents the relationship between a room and a parameter in the system.
+
+    Attributes:
+        id (int): The unique identifier of the parameter relationship.
+        id_room (int): The room identifier associated with this parameter (ForeignKey).
+        id_parameter (int): The parameter identifier associated with this room (ForeignKey).
+        date (DateTime): The date the parameter value was recorded.
+        value (float): The value of the parameter for the room.
+        created_at (DateTime): The timestamp when the parameter value was recorded.
+    """
+
     __tablename__ = "parameter_rooms"
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_room = Column(Integer, ForeignKey("rooms.id"), nullable=False)
@@ -83,6 +159,16 @@ class ParameterRoom(Base):
 
 
 class Parameter(Base):
+    """
+    Represents a parameter in the system.
+
+    Attributes:
+        id (int): The unique identifier of the parameter.
+        name (str): The name of the parameter.
+        description (str): A description of the parameter.
+        created_at (DateTime): The timestamp when the parameter record was created.
+    """
+
     __tablename__ = "parameters"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
@@ -93,6 +179,16 @@ class Parameter(Base):
 
 
 class Shelter(Base):
+    """
+    Represents a shelter in the system.
+
+    Attributes:
+        id (int): The unique identifier of the shelter.
+        name (str): The name of the shelter.
+        description (str): The description of the shelter.
+        created_at (DateTime): The timestamp when the shelter record was created.
+    """
+
     __tablename__ = "shelters"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
@@ -104,6 +200,16 @@ class Shelter(Base):
 
 
 class Relationship(Base):
+    """
+    Represents a relationship between tenants in the system.
+
+    Attributes:
+        id (int): The unique identifier of the relationship.
+        name (str): The name of the relationship.
+        description (str): A description of the relationship.
+        created_at (DateTime): The timestamp when the relationship record was created.
+    """
+
     __tablename__ = "relationships"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
@@ -112,6 +218,17 @@ class Relationship(Base):
 
 
 class TenantRelationship(Base):
+    """
+    Represents a relationship between two tenants.
+
+    Attributes:
+        id_tenant_relationship (int): The unique identifier of the tenant relationship.
+        id_tenant_1 (int): The first tenant involved in the relationship (ForeignKey).
+        id_tenant_2 (int): The second tenant involved in the relationship (ForeignKey).
+        id_relationship (int): The relationship type identifier (ForeignKey).
+        created_at (DateTime): The timestamp when the tenant relationship was created.
+    """
+   
     __tablename__ = "tenant_relationships"
     id_tenant_relationship = Column(Integer, primary_key=True, autoincrement=True)
     id_tenant_1 = Column(Integer, ForeignKey("tenants.id"), nullable=False)
