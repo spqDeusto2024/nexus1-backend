@@ -39,6 +39,7 @@ class TenantUpdate(TenantBase):
         status (Optional[bool]): Tenant's status (optional).
         genre (Optional[str]): Tenant's genre (optional).
     """
+    id : int
     status: Optional[bool] = None
     genre: Optional[str] = None
 
@@ -81,6 +82,7 @@ class RoleUpdate(RoleBase):
     Attributes:
         description (Optional[str]): Description of the role (optional).
     """
+    id : int
     description: Optional[str] = None
 
 class RoleDelete(BaseModel):
@@ -129,6 +131,7 @@ class RoomUpdate(RoomBase):
         availability (Optional[bool]): Room's availability (optional).
         actual_tenant_number (Optional[int]): Current number of tenants in the room (optional).
     """
+    id : int
     availability: Optional[bool] = None
     actual_tenant_number: Optional[int] = None
 
@@ -178,6 +181,7 @@ class DormitoryUpdate(DormitoryBase):
         availability (Optional[bool]): Dormitory's availability (optional).
         actual_tenant_number (Optional[int]): Current number of tenants in the dormitory (optional).
     """
+    id : int
     availability: Optional[bool] = None
     actual_tenant_number: Optional[int] = None
 
@@ -220,6 +224,7 @@ class AdministratorUpdate(AdministratorBase):
     Attributes:
         password (Optional[str]): Administrator's password (optional).
     """
+    id : int
     password: Optional[str] = None
 
 class AdministratorDelete(BaseModel):
@@ -261,6 +266,7 @@ class ParameterUpdate(ParameterBase):
     Attributes:
         description (Optional[str]): Description of the parameter (optional).
     """
+    id : int
     description: Optional[str] = None
 
 class ParameterDelete(BaseModel):
@@ -302,6 +308,7 @@ class ShelterUpdate(ShelterBase):
     Attributes:
         description (Optional[str]): Description of the shelter (optional).
     """
+    id: int
     description: Optional[str] = None
 
 class ShelterDelete(BaseModel):
@@ -324,6 +331,7 @@ class RelationshipBase(BaseModel):
         name (str): Name of the relationship.
         description (str): Description of the relationship.
     """
+    id : int
     name: str
     description: str
 
@@ -343,6 +351,7 @@ class RelationshipUpdate(RelationshipBase):
     Attributes:
         description (Optional[str]): Description of the relationship type (optional).
     """
+    id : int
     description: Optional[str] = None
 
 class RelationshipDelete(BaseModel):
@@ -386,6 +395,7 @@ class TenantRelationshipUpdate(TenantRelationshipBase):
     Attributes:
         id_relationship (Optional[int]): Optional attribute to update the relationship type between the two tenants.
     """
+    id_tenant_relationship: int
     id_relationship: Optional[int] = None
 
 

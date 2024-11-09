@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, Boolean, Float, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from app.mysql.base import Base  # Assuming you have a base class for SQLAlchemy
+from app.mysql.base import Base
+from sqlalchemy.sql import func
 
 class Tenant(Base):
     """
@@ -27,7 +28,8 @@ class Tenant(Base):
     age = Column(String(50), nullable=True)
     status = Column(Boolean, nullable=True)
     genre = Column(String(50), nullable=True)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
+
 
     role = relationship("Role", back_populates="tenants")
     dormitory = relationship("Dormitory", back_populates="tenants")
@@ -50,7 +52,7 @@ class Role(Base):
     name = Column(String(255), unique=True, nullable=False)
     description = Column(String(255), unique=True, nullable=True)
     id_room_relationship = Column(Integer, ForeignKey("rooms.id"), nullable=True)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     tenants = relationship("Tenant", back_populates="role")
     room_relationship = relationship("Room", back_populates="roles")
@@ -79,7 +81,7 @@ class Room(Base):
     capacity = Column(Integer, nullable=True)
     actual_tenant_number = Column(Integer, nullable=True)
     availability = Column(Boolean, nullable=True)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     shelter = relationship("Shelter", back_populates="rooms")
     roles = relationship("Role", back_populates="room_relationship")
@@ -109,7 +111,7 @@ class Dormitory(Base):
     capacity = Column(Integer, nullable=True)
     actual_tenant_number = Column(Integer, nullable=True)
     availability = Column(Boolean, nullable=True)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     shelter = relationship("Shelter", back_populates="dormitories")
     tenants = relationship("Tenant", back_populates="dormitory")
@@ -130,7 +132,7 @@ class Administrator(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
 
 class ParameterRoom(Base):
@@ -152,7 +154,7 @@ class ParameterRoom(Base):
     id_parameter = Column(Integer, ForeignKey("parameters.id"), nullable=False)
     date = Column(DateTime, nullable=False)
     value = Column(Float, nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     room = relationship("Room", back_populates="parameters")
     parameter = relationship("Parameter", back_populates="parameter_rooms")
@@ -173,7 +175,7 @@ class Parameter(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
     description = Column(String(255), unique=True, nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     parameter_rooms = relationship("ParameterRoom", back_populates="parameter")
 
@@ -193,7 +195,7 @@ class Shelter(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
     description = Column(String(255), unique=True, nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
     rooms = relationship("Room", back_populates="shelter")
     dormitories = relationship("Dormitory", back_populates="shelter")
@@ -214,7 +216,7 @@ class Relationship(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
     description = Column(String(255), unique=True, nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
 
 
 class TenantRelationship(Base):
@@ -234,4 +236,4 @@ class TenantRelationship(Base):
     id_tenant_1 = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     id_tenant_2 = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     id_relationship = Column(Integer, ForeignKey("relationships.id"), nullable=False)
-    created_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False,default=func.now())
