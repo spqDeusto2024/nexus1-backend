@@ -6,6 +6,7 @@ from app.mysql.mysql import Nexus1DataBase
 import app.utils.vars as var
 from sqlalchemy.orm import Session
 
+
 class Shelter_Controller:
     """
     Controller for managing shelter-related operations.
