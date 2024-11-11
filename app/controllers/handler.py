@@ -28,7 +28,7 @@ class Shelter_Controller:
         """
         pass
     
-    def healhz(self):
+    def healthz(self):
         """
         Checks the status of the connection.
 
