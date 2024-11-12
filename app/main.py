@@ -1,7 +1,8 @@
 # app/main.py
 from fastapi import FastAPI
 from typing import Union
-from app.controllers.handler import *
+from app.controllers.shelter_handler import Shelter_Controller
+from app.controllers.dormitory_handler import Dormitory_Controller
 from app.mysql.mysql import Nexus1DataBase
 
 import app.models.models as models
@@ -39,7 +40,7 @@ def startup():
 
 
 
-# @app.get("/")
+# @app.get("/") 
 # def read_root():
 #     # GENERATE CHANGES HERE TO PROVE SYNC STAGE
 #     return {"message": "Hello, Dartañan!"}
