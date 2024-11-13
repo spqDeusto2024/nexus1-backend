@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from typing import Union
 from app.controllers.shelter_handler import Shelter_Controller
 from app.controllers.dormitory_handler import Dormitory_Controller
+from app.controllers.role_handler import Role_Controller
+from app.controllers.parameter_room_handler import ParameterRoom_Controller
 from app.mysql.mysql import Nexus1DataBase
 
 import app.models.models as models
@@ -15,6 +17,8 @@ app = FastAPI()
 nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
 shelterController = Shelter_Controller()
 dormitoryController = Dormitory_Controller()
+RoleController = Role_Controller()
+ParameterRoomController = ParameterRoom_Controller()
 
 @app.on_event("startup")
 def startup():
@@ -91,3 +95,46 @@ async def get_all_dormitory():
 @app.post('/dormitory/update')
 async def update_dormitory(body: models.DormitoryUpdate):
   return dormitoryController.update_dormitory(body)
+
+
+@app.get('/Role/healthz')
+async def Role_healthz():
+  return RoleController.healthz()
+
+@app.post('/Role/create')
+async def create_role(body: models.RoleCreate):
+  return RoleController.create_role(body)
+
+@app.post('/Role/delete')
+async def delete_roles(body: models.RoleDelete):
+  return RoleController.delete_Role(body)
+  
+@app.get('/Role/get_all')
+async def get_all_roles():
+  return RoleController.get_all()
+
+@app.post('/Role/update')
+async def update_role(body: models.RoleUpdate):
+  return RoleController.update_Role(body)
+
+
+
+@app.get('/ParameterRoom/healthz')
+async def ParameterRoom_healthz():
+  return ParameterRoomController.healthz()
+
+@app.post('/ParameterRoom/create')
+async def create_parameterRoom(body: models.ParameterRoomCreate):
+  return ParameterRoomController.create_parameterRoom(body)
+
+@app.post('/ParameterRoom/delete')
+async def delete_parameterRoom(body: models.ParameterRoomDelete):
+  return ParameterRoomController.delete_ParameterRoom(body)
+  
+@app.get('/ParameterRoom/get_all')
+async def get_all_parameterRoom():
+  return ParameterRoomController.get_all()
+
+@app.post('/ParameterRoom/update')
+async def update_parameterRoom(body: models.ParameterRoomUpdate):
+  return ParameterRoomController.update_ParameterRoom(body)

@@ -5,6 +5,48 @@ from typing import Optional
 # -----------------------------------------------
 # TENANT: Model to represent a tenant
 # -----------------------------------------------
+class ParameterRoomBase(BaseModel):
+    """
+    Base model for a room parameter record.
+
+    Attributes:
+        id_room (int): Identifier of the room.
+        id_parameter (int): Identifier of the parameter.
+        date (datetime): Date of the parameter record.
+        value (float): Value of the parameter recorded.
+    """
+    id_room: int
+    id_parameter: int
+    date: datetime
+    value: float
+
+class ParameterRoomCreate(ParameterRoomBase):
+    """
+    Model for creating a new room parameter record.
+
+    Attributes:
+        created_at (datetime): Timestamp indicating when the record was created.
+    """
+    created_at: datetime
+
+class ParameterRoomUpdate(ParameterRoomBase):
+    """
+    Model for updating an existing room parameter record.
+
+    Attributes:
+        id (int): Unique identifier for the record, mandatory to ensure the correct record is updated.
+    """
+    id: int
+
+class ParameterRoomDelete(ParameterRoomBase):
+    """
+    Model for deleting an existing room parameter record.
+
+    Attributes:
+        id (int): Unique identifier for the record, required to ensure the correct record is deleted.
+    """
+    id: int
+
 class TenantBase(BaseModel):
     """
     Base model for a tenant.
@@ -65,6 +107,7 @@ class RoleBase(BaseModel):
     """
     name: str
     description: Optional[str] = None
+    id_room_relationship: Optional[int] = None
 
 class RoleCreate(RoleBase):
     """
