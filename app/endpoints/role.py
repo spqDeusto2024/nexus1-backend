@@ -1,0 +1,26 @@
+from fastapi import APIRouter, Depends
+from app.controllers.role_handler import Role_Controller
+import app.models.models as models
+
+router = APIRouter()
+roleController = Role_Controller()
+
+@router.get("/healthz")
+async def role_healthz():
+    return roleController.healthz()
+
+@router.post('/create')
+async def create_role(body: models.RoleCreate):
+    return roleController.create_role(body)
+
+@router.post('/delete')
+async def delete_role(body: models.RoleDelete):
+    return roleController.delete_role(body)
+  
+@router.get('/get_all')
+async def get_all_roles():
+    return roleController.get_all()
+
+@router.post('/update')
+async def update_role(body: models.RoleUpdate):
+    return roleController.update_role(body)

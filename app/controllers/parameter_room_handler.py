@@ -105,7 +105,7 @@ class ParameterRoom_Controller:
                 code=500
             )
 
-    def delete_ParameterRoom(self, body: models.ParameterRoomDelete):
+    def delete_parameterRoom(self, body: models.ParameterRoomDelete):
         """
         Deletes a ParameterRoom from the database.
 
@@ -139,7 +139,7 @@ class ParameterRoom_Controller:
                 code=500
             )
 
-    def update_ParameterRoom(self, body: models.ParameterRoomUpdate):
+    def update_parameterRoom(self, body: models.ParameterRoomUpdate):
         """
         Updates an existing ParameterRoom in the database.
 

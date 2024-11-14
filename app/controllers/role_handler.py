@@ -105,7 +105,7 @@ class Role_Controller:
                 code=500
             )
 
-    def delete_Role(self, body: models.RoleDelete):
+    def delete_role(self, body: models.RoleDelete):
         """
         Deletes a Role from the database.
 
@@ -139,7 +139,7 @@ class Role_Controller:
                 code=500
             )
 
-    def update_Role(self, body: models.RoleUpdate):
+    def update_role(self, body: models.RoleUpdate):
         """
         Updates an existing Role in the database.
 
