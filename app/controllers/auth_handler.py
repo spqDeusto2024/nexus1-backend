@@ -1,8 +1,13 @@
 # app/controllers/auth_handler.py
-from fastapi import HTTPException, status
-from app.utils.auth import authenticate_user, create_access_token, verify_password
+from fastapi import HTTPException, status,Depends
+from app.utils.hashing import verify_password
 from app.models import models
-from app.db import get_user_by_username  # Function to get a user from the database
+from app.models.response_models import ResponseModel
+from app.controllers.administrator_handler import Administrator_Controller   # Function to get a user from the database
+from app.auth.jwt_handler import create_access_token,verify_token
+from typing import Annotated
+from fastapi.security import  OAuth2PasswordRequestForm
+
 
 class Auth_Controller:
     """
@@ -18,7 +23,7 @@ class Auth_Controller:
     def __init__(self):
         pass
 
-    def login(self, credentials: models.LoginCredentials):
+    def login(self, form_data: OAuth2PasswordRequestForm):
         """
         Authenticates a user by verifying their username and password.
         
@@ -35,19 +40,26 @@ class Auth_Controller:
         Raises:
             HTTPException: If the credentials are invalid, an HTTP 401 Unauthorized exception is raised.
         """
-        
-        user = get_user_by_username(credentials.username)
+
+        #se crea en cada llamda o se pone comoa atributo de clase no importa
+        #no hay patron singleton
+
+        admin_controller = Administrator_Controller()
+        user = admin_controller.get_admin_by_username(form_data.username).data
         
         if not user:
+            print(f"No admin exists with {form_data.username} username")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid credentials",  # Invalid username
+                detail="Invalid username or password"
             )
         
-        if not verify_password(credentials.password, user.hashed_password):
+        if not verify_password(form_data.password, user.password):
+            print("Error incorrect password")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid credentials",  # Invalid password
-            )    
+                detail="Invalid username or password"
+            )
+        print("si crea el token")
         token = create_access_token(data={"sub": user.username})   
         return {"access_token": token, "token_type": "bearer"}
