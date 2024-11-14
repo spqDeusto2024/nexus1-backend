@@ -451,3 +451,10 @@ class TenantRelationshipDelete(BaseModel):
         id_tenant_relationship (int): The ID of the tenant relationship to be deleted.
     """
     id_tenant_relationship: int
+
+# -----------------------------------------------
+# LOGIN: Model to encapsulate needed data on a login authentication process
+# -----------------------------------------------
+class LoginCredentials(BaseModel):
+    username: str
+    password: str

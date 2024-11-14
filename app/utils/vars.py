@@ -1,3 +1,4 @@
 import os
 
-MYSQL_URL: str = os.getenv("MYSQL_URL") if os.getenv("MYSQL_URL") != None  else "mysql://nexus1-admin:nexus1-password@0.0.0.0:3306/fastapi"
+MYSQL_URL: str = os.getenv("MYSQL_URL") if os.getenv("MYSQL_URL") is not None else "mysql://nexus1-admin:nexus1-password@0.0.0.0:3306/fastapi"
+TOKEN_AUTH_SECRET_KEY: str = os.getenv("TOKEN_AUTH_SECRET_KEY", "MANUELESUNANIMAL_G_G_G_11")

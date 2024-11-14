@@ -1,26 +1,27 @@
 from fastapi import APIRouter, Depends
 from app.controllers.dormitory_handler import Dormitory_Controller
+from app.auth.dependencies import get_current_user
 import app.models.models as models
 
 router = APIRouter()
 dormitoryController = Dormitory_Controller()
 
 @router.get("/healthz")
-async def dormitory_healthz():
+async def dormitory_healthz(current_user: dict = Depends(get_current_user)):
     return dormitoryController.healthz()
 
 @router.post('/create')
-async def create_dormitory(body: models.DormitoryCreate):
+async def create_dormitory(body: models.DormitoryCreate,current_user: dict = Depends(get_current_user)):
     return dormitoryController.create_dormitory(body)
 
 @router.post('/delete')
-async def delete_dormitory(body: models.DormitoryCreate):
+async def delete_dormitory(body: models.DormitoryCreate,current_user: dict = Depends(get_current_user)):
     return dormitoryController.delete_dormitory(body)
   
 @router.get('/get_all')
-async def get_all_dormitory():
+async def get_all_dormitory(current_user: dict = Depends(get_current_user)):
     return dormitoryController.get_all()
 
 @router.post('/update')
-async def update_dormitory(body: models.DormitoryUpdate):
+async def update_dormitory(body: models.DormitoryUpdate,current_user: dict = Depends(get_current_user)):
     return dormitoryController.update_dormitory(body)
