@@ -13,7 +13,6 @@ import app.utils.vars as var
 app = FastAPI()
 nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
 
-
 app.include_router(shelter.router,prefix = "/shelter")
 app.include_router(dormitory.router,prefix = "/dormitory")
 app.include_router(role.router,prefix = "/role")
