@@ -5,8 +5,10 @@ from app.controllers.shelter_handler import Shelter_Controller
 from app.controllers.dormitory_handler import Dormitory_Controller
 from app.controllers.role_handler import Role_Controller
 from app.controllers.parameter_room_handler import ParameterRoom_Controller
+#from app.controllers.room_handler import Room_Controller
 from app.mysql.mysql import Nexus1DataBase
 from app.endpoints import shelter,dormitory,role,parameterRoom
+#from app.endpoints import room
 
 import app.models.models as models
 import app.utils.vars as var 
@@ -20,8 +22,10 @@ shelterController = Shelter_Controller()
 dormitoryController = Dormitory_Controller()
 roleController = Role_Controller()
 parameterRoomController = ParameterRoom_Controller()
+#roomController = Room_Controller()
 
 app.include_router(shelter.router,prefix = "/shelter")
 app.include_router(dormitory.router,prefix = "/dormitory")
 app.include_router(role.router,prefix = "/role")
 app.include_router(parameterRoom.router,prefix = "/parameter_room")
+#app.include_router(room.router,prefix = "/room")
