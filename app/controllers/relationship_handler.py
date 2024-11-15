@@ -15,10 +15,10 @@ class Relationship_Controller:
 
     Methods:
         healhz: Checks the status of the connection.
-        create_dormitory: Creates a new relationship in the database.
+        relationship: Creates a new relationship in the database.
         get_all: Retrieves all relationship stored in the database.
-        delete_dormitory: Deletes a relationship from the database.
-        update_dormitory: Updates an existing relationship in the database.
+        delete_relationship: Deletes a relationship from the database.
+        update_relationship: Updates an existing relationship in the database.
     """
 
     def __init__(self) -> None:

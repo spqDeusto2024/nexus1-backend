@@ -14,10 +14,10 @@ class Tenant_Controller:
 
     Methods:
         healhz: Checks the status of the connection.
-        create_dormitory: Creates a new tenant in the database.
+        create_tenant: Creates a new tenant in the database.
         get_all: Retrieves all tenants stored in the database.
-        delete_dormitory: Deletes a tenant from the database.
-        update_dormitory: Updates an existing tenant in the database.
+        delete_tenant: Deletes a tenant from the database.
+        update_tenant: Updates an existing tenant in the database.
     """
 
     def __init__(self) -> None:
