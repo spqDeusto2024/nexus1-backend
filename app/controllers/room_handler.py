@@ -83,68 +83,68 @@ class Room_Controller:
 
 
         def get_all(self):
-        """
-        Retrieves all rooms from the database.
+            """
+            Retrieves all rooms from the database.
 
-        This method queries all rooms records in the database and returns them.
+            This method queries all rooms records in the database and returns them.
 
-        Returns:
-            ResponseModel: A response model with the status of the operation, message, and rooms data.
-        """
-        try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            response: list = []
-            with Session(db.engine) as session:
-                response = session.query(mysql_models.Room).all()
-                session.close()
-            return ResponseModel(
-                status="ok",
-                message="All rooms successfully retrieved",
-                data=response,
-                code=201
-            )
-        except Exception as e:
-            print("Error retrieving rooms from database")
-            return ResponseModel(
-                status="error",
-                message=str(e),
-                data=None,
-                code=500
-            )
+            Returns:
+                ResponseModel: A response model with the status of the operation, message, and rooms data.
+            """
+            try:
+                db = Nexus1DataBase(var.MYSQL_URL)
+                response: list = []
+                with Session(db.engine) as session:
+                    response = session.query(mysql_models.Room).all()
+                    session.close()
+                return ResponseModel(
+                    status="ok",
+                    message="All rooms successfully retrieved",
+                    data=response,
+                    code=201
+                )
+            except Exception as e:
+                print("Error retrieving rooms from database")
+                return ResponseModel(
+                    status="error",
+                    message=str(e),
+                    data=None,
+                    code=500
+                )
 
-    def delete_room(self, body: models.RoomDelete):
-        """
-        Deletes a room from the database.
+        def delete_room(self, body: models.RoomDelete):
+            """
+            Deletes a room from the database.
 
-        This method takes a RoomDelete object, which contains the ID of the room to delete.
+            This method takes a RoomDelete object, which contains the ID of the room to delete.
 
-        Parameters:
-            body (models.RoomDelete): An object containing the room ID to delete.
+            Parameters:
+                body (models.RoomDelete): An object containing the room ID to delete.
 
-        Returns:
-            ResponseModel: A response model with the status of the operation, message, and deleted room data.
-        """
-        try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
-                room_deleted = session.query(mysql_models.Room).get(body.id)
-                session.delete(room_deleted)
-                session.commit()
-                session.close()
-            return ResponseModel(
-                status="ok",
-                message="Room successfully deleted",
-                data=room_deleted,
-                code=201
-            )
-        except Exception as e:
-            print("Error deleting room from database")
-            return ResponseModel(
-                status="error",
-                message=str(e),
-                data=None,
-                code=500
-            ) 
+            Returns:
+                ResponseModel: A response model with the status of the operation, message, and deleted room data.
+            """
+            try:
+                db = Nexus1DataBase(var.MYSQL_URL)
+                with Session(db.engine) as session:
+                    room_deleted = session.query(mysql_models.Room).get(body.id)
+                    session.delete(room_deleted)
+                    session.commit()
+                    session.close()
+                return ResponseModel(
+                    status="ok",
+                    message="Room successfully deleted",
+                    data=room_deleted,
+                    code=201
+                )
+            except Exception as e:
+                print("Error deleting room from database")
+                return ResponseModel(
+                    status="error",
+                    message=str(e),
+                    data=None,
+                    code=500
+                ) 
     
     def update_room(self, body: models.RoomUpdate):
         """

@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from typing import Union
 from app.mysql.mysql import Nexus1DataBase
-from app.endpoints import shelter,dormitory,role,parameterRoom,auth,administrator
+from app.endpoints import shelter,dormitory,role,parameterRoom,auth,administrator,room
 
 import app.models.models as models
 import app.utils.vars as var 
@@ -18,4 +18,5 @@ app.include_router(dormitory.router,prefix = "/dormitory")
 app.include_router(role.router,prefix = "/role")
 app.include_router(parameterRoom.router,prefix = "/parameter_room")
 app.include_router(administrator.router,prefix = "/admnistrator")
+app.include_router(room.router,prefix= "/room")
 app.include_router(auth.router,prefix = "/auth")
