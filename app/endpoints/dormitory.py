@@ -15,7 +15,7 @@ async def create_dormitory(body: models.DormitoryCreate,current_user: dict = Dep
     return dormitoryController.create_dormitory(body)
 
 @router.post('/delete')
-async def delete_dormitory(body: models.DormitoryCreate,current_user: dict = Depends(get_current_user)):
+async def delete_dormitory(body: models.DormitoryDelete,current_user: dict = Depends(get_current_user)):
     return dormitoryController.delete_dormitory(body)
   
 @router.get('/get_all')
