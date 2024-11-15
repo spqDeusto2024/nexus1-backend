@@ -20,3 +20,7 @@ app.include_router(parameterRoom.router,prefix = "/parameter_room")
 app.include_router(administrator.router,prefix = "/admnistrator")
 app.include_router(room.router,prefix= "/room")
 app.include_router(auth.router,prefix = "/auth")
+app.include_router(auth.router,prefix = "/tenant")
+app.include_router(auth.router,prefix = "/relationship")
+app.include_router(auth.router,prefix = "/tenantRelationship")
+
