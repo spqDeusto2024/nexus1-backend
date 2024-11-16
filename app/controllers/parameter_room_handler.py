@@ -127,7 +127,7 @@ class ParameterRoom_Controller:
             return ResponseModel(
                 status="ok",
                 message="ParameterRoom successfully deleted",
-                data=role_deleted,
+                data=parameterRoom_deleted,
                 code=201
             )
         except Exception as e:
