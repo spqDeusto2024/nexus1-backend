@@ -54,13 +54,13 @@ jobs:
           docker exec fastapi-nexus1 pytest /code/test
 
      # Limpiar los contenedores, volúmenes, imágenes y builds creados durante las pruebas
-      - name: Cleanup Docker (containers, volumes, images)
-        run: |
-          # Detener y eliminar los contenedores creados
-          docker compose down --volumes --remove-orphans
+      # - name: Cleanup Docker (containers, volumes, images)
+      #   run: |
+      #     # Detener y eliminar los contenedores creados
+      #     docker compose down --volumes --remove-orphans
 
-          # Eliminar las imágenes construidas durante las pruebas
-          docker rmi $(docker images -q --filter "dangling=true")
+      #     # Eliminar las imágenes construidas durante las pruebas
+      #     docker rmi $(docker images -q --filter "dangling=true")
 
-          # Eliminar cualquier build intermedio o contenedor no usado
-          docker system prune -f --volumes --all
+      #     # Eliminar cualquier build intermedio o contenedor no usado
+      #     docker system prune -f --volumes --all
