@@ -313,6 +313,7 @@ class ParameterUpdate(ParameterBase):
         description (Optional[str]): Description of the parameter (optional).
     """
     id : int
+    name : Optional[str] = None
     description: Optional[str] = None
 
 class ParameterDelete(BaseModel):
