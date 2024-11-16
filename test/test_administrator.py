@@ -1,6 +1,10 @@
 import pytest
 from httpx import AsyncClient
-from app.main import app
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../app')))
+import main as app # Esto debería importar app.main correctamente
+
 
 @pytest.mark.asyncio
 async def test_create_user():

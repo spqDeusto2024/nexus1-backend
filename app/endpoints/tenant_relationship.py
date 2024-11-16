@@ -4,7 +4,7 @@ from app.auth.dependencies import get_current_user
 import app.models.models as models
 
 router = APIRouter()
-tenantRelationshipController = Tenant_Relationship_Controller
+tenantRelationshipController = Tenant_Relationship_Controller()
 
 @router.get("/healthz")
 async def tenant_relationship_healthz(current_user: dict = Depends(get_current_user)):

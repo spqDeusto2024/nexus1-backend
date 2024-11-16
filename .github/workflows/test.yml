@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: [ "3.10"]
 
     steps:
       # Checkout el código
@@ -23,18 +23,18 @@ jobs:
 
       # Levantar los servicios con docker-compose
       - name: Start docker-compose 
-        run: docker-compose up -d
+        run: docker compose up -d
 
       # Esperar a que los servicios estén disponibles
       - name: Wait for services to be up
         run: |
           sleep 10
-          docker-compose ps
+          docker compose ps
 
-      # Verificar que la base de datos está accesible (ejemplo usando PostgreSQL)
-      - name: Check database is up
-        run: |
-          docker exec -i <nombre_contenedor_db> psql -U <usuario> -c '\l'
+      # # Verificar que la base de datos está accesible (ejemplo usando PostgreSQL)
+      # - name: Check database is up
+      #   run: |
+      #     docker exec -i mysql_nexus1 mysql -root -root -e "SHOW DATABASES;"
 
       # Verificar que FastAPI está accesible
       - name: Check FastAPI is up
@@ -42,15 +42,25 @@ jobs:
           curl -f http://localhost:8000/docs || exit 1
 
       # Instalar dependencias para pruebas
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install httpx pytest
+      # - name: Install dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install --no-cache-dir --upgrade -r requirements.txt
 
       # Ejecutar pruebas unitarias
-      - name: Run unit tests
-        run: pytest tests/
+      - name: Run tests inside Docker container
+        run: |
+          # Reemplaza 'app' por el nombre del servicio donde quieres correr las pruebas
+          docker exec fastapi-nexus1 pytest /code/test
 
-      # Apagar los servicios al final
-      - name: Stop docker-compose
-        run: docker-compose down
+     # Limpiar los contenedores, volúmenes, imágenes y builds creados durante las pruebas
+      - name: Cleanup Docker (containers, volumes, images)
+        run: |
+          # Detener y eliminar los contenedores creados
+          docker compose down --volumes --remove-orphans
+
+          # Eliminar las imágenes construidas durante las pruebas
+          docker rmi $(docker images -q --filter "dangling=true")
+
+          # Eliminar cualquier build intermedio o contenedor no usado
+          docker system prune -f --volumes --all

@@ -12,5 +12,4 @@ authController = Auth_Controller()
 
 @router.post("/login",include_in_schema=False)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    print("called")
     return authController.login(form_data)
