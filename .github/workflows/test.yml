@@ -51,7 +51,8 @@ jobs:
       - name: Run tests inside Docker container
         run: |
           # Reemplaza 'app' por el nombre del servicio donde quieres correr las pruebas
-          docker exec fastapi-nexus1 pytest /code/test
+          docker exec fastapi-nexus1 coverage run -m pytest /code/test
+          docker exec fastapi-nexus1 coverage report  # Reporte en consola
 
      # Limpiar los contenedores, volúmenes, imágenes y builds creados durante las pruebas
       # - name: Cleanup Docker (containers, volumes, images)

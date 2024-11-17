@@ -6,3 +6,5 @@ passlib[bcrypt]
 python-multipart
 pytest
 httpx
+coverage
+requests

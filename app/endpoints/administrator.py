@@ -16,13 +16,13 @@ async def create_administrator(body: models.AdministratorCreate):
     return adminController.create_administrator(body)
 
 @router.post('/delete')
-async def delete_dormitory(body: models.AdministratorDelete,current_user: dict = Depends(get_current_user)):
+async def delete_administrator(body: models.AdministratorDelete,current_user: dict = Depends(get_current_user)):
     return adminController.delete_administrator(body)
   
 @router.get('/get_all')
-async def get_all_dormitory(current_user: dict = Depends(get_current_user)):
+async def get_all_administrators(current_user: dict = Depends(get_current_user)):
     return adminController.get_all()
 
 @router.post('/update')
-async def update_dormitory(body: models.AdministratorUpdate,current_user: dict = Depends(get_current_user)):
+async def update_administrator(body: models.AdministratorUpdate,current_user: dict = Depends(get_current_user)):
     return adminController.update_administrator(body)
