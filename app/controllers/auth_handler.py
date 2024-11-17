@@ -16,8 +16,7 @@ class Auth_Controller:
     Attributes:
         None
     
-    Methods:
-        login(credentials: models.LoginCredentials): Authenticates the user by checking the provided credentials.
+   
     """
     
     def __init__(self):

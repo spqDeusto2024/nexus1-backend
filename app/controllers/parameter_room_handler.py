@@ -13,12 +13,7 @@ class ParameterRoom_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of ParameterRooms in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_ParameterRoom: Creates a new ParameterRoom in the database.
-        get_all: Retrieves all ParameterRooms stored in the database.
-        delete_ParameterRoom: Deletes a ParameterRoom from the database.
-        update_ParameterRooM: Updates an existing ParameterRoom in the database.
+    
     """
 
     def __init__(self) -> None:

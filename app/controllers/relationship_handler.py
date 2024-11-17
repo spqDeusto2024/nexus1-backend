@@ -13,12 +13,7 @@ class Relationship_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of relationships in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        relationship: Creates a new relationship in the database.
-        get_all: Retrieves all relationship stored in the database.
-        delete_relationship: Deletes a relationship from the database.
-        update_relationship: Updates an existing relationship in the database.
+    
     """
 
     def __init__(self) -> None:

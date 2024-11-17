@@ -18,12 +18,7 @@ class Dormitory_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of dormitories in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_dormitory: Creates a new dormitory in the database.
-        get_all: Retrieves all dormitories stored in the database.
-        delete_dormitory: Deletes a dormitory from the database.
-        update_dormitory: Updates an existing dormitory in the database.
+ 
     """
 
     def __init__(self) -> None:

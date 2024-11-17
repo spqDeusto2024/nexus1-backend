@@ -13,13 +13,7 @@ class Administrator_Controller:
 
     This class handles the creation, updating, deletion, retrieval, and authentication of administrators in the database.
 
-    Methods:
-        healthz: Checks the status of the connection.
-        create_administrator: Creates a new administrator in the database.
-        get_all: Retrieves all administrators stored in the database.
-        delete_administrator: Deletes an administrator from the database.
-        update_administrator: Updates an existing administrator in the database.
-        login: Authenticates an administrator and returns a JWT token.
+    
     """
 
     def __init__(self) -> None:

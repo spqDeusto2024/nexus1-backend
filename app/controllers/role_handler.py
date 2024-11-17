@@ -13,12 +13,7 @@ class Role_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of roles in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_shelter: Creates a new role in the database.
-        get_all: Retrieves all roles stored in the database.
-        delete_shelter: Deletes a role from the database.
-        update_shelter: Updates an existing role in the database.
+   
     """
 
     def __init__(self) -> None:

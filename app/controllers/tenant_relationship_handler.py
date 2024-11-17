@@ -13,12 +13,6 @@ class Tenant_Relationship_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of tenant_relationship in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_tenant_relationship: Creates a new tenant_relationship in the database.
-        get_all: Retrieves all tenant_relationships stored in the database.
-        delete_tenantRelationship: Deletes a tenant_relationship from the database.
-        update_tenantRelationship: Updates an existing tenant_relationship in the database.
     """
 
     def __init__(self) -> None:

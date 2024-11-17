@@ -13,12 +13,7 @@ class Shelter_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of shelters in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_shelter: Creates a new shelter in the database.
-        get_all: Retrieves all shelters stored in the database.
-        delete_shelter: Deletes a shelter from the database.
-        update_shelter: Updates an existing shelter in the database.
+  
     """
 
     def __init__(self) -> None:

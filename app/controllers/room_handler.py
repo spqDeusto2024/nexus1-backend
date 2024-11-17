@@ -13,12 +13,7 @@ class Room_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of rooms in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_shelter: Creates a new room in the database.
-        get_all: Retrieves all room stored in the database.
-        delete_shelter: Deletes a rooom from the database.
-        update_shelter: Updates an existing room in the database.
+   
     """
 
     def __init__(self) -> None:

@@ -13,12 +13,7 @@ class Parameter_Controller:
 
     This class handles the creation, updating, deletion, and retrieval of Parameters in the database.
 
-    Methods:
-        healhz: Checks the status of the connection.
-        create_Parameter: Creates a new Parameter in the database.
-        get_all: Retrieves all Parameters stored in the database.
-        delete_Parameter: Deletes a Parameter from the database.
-        update_Parameter: Updates an existing Parameter in the database.
+    
     """
 
     def __init__(self) -> None:

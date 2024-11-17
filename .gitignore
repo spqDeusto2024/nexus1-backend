@@ -2,3 +2,24 @@
 __pycache__
 myCredentials.properties
 mysql/data/*
+
+# Ignorar la carpeta build (archivos generados por Sphinx)
+build/
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Configuración local de Sphinx o editor
+source/conf.pyc
+source/_static/
+source/_templates/
+
+# Archivos de entorno virtual (si aplican)
+.env
+.venv
+
+# Otros archivos innecesarios
+.DS_Store
+Thumbs.db
