@@ -15,7 +15,7 @@ async def create_tenant(body: models.TenantCreate,current_user: dict = Depends(g
     return tenantController.create_tenant(body)
 
 @router.post('/delete')
-async def delete_tenant(body: models.TenantCreate,current_user: dict = Depends(get_current_user)):
+async def delete_tenant(body: models.TenantDelete,current_user: dict = Depends(get_current_user)):
     return tenantController.delete_tenant(body)
   
 @router.get('/get_all')
