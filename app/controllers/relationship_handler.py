@@ -163,7 +163,7 @@ class Relationship_Controller:
             return ResponseModel(
                 status="ok",
                 message="Relationship successfully updated",
-                data=dormitory,
+                data=relationship,
                 code=201
             )
         except Exception as e:
