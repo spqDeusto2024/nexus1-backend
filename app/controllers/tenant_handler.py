@@ -49,7 +49,7 @@ class Tenant_Controller:
         """
         try:
             body_row = mysql_models.Tenant(
-                id_role = body.id_shelter,
+                id_role = body.id_role,
                 id_dormitory = body.id_dormitory,
                 name = body.name,
                 surname = body.surname, 
@@ -123,7 +123,7 @@ class Tenant_Controller:
         try:
             db = Nexus1DataBase(var.MYSQL_URL)
             with Session(db.engine) as session:
-                tenant_deleted = session.query(mysql_models.Dormitory).get(body.id)
+                tenant_deleted = session.query(mysql_models.Tenant).get(body.id)
                 session.delete(tenant_deleted)
                 session.commit()
                 session.close()
@@ -171,7 +171,7 @@ class Tenant_Controller:
             return ResponseModel(
                 status="ok",
                 message="Tenant successfully updated",
-                data=dormitory,
+                data=tenant,
                 code=201
             )
         except Exception as e:
