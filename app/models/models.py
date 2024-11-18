@@ -62,8 +62,8 @@ class TenantBase(BaseModel):
         status (Optional[bool]): Tenant's status, whether active or not (optional).
         genre (Optional[str]): Tenant's genre (optional).
     """
-    id_role: int
-    id_dormitory: int
+    id_role: Optional[int]= None
+    id_dormitory: Optional[int]= None
     name: str
     surname: str
     age: Optional[str] = None
