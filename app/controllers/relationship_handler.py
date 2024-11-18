@@ -118,7 +118,7 @@ class Relationship_Controller:
         try:
             db = Nexus1DataBase(var.MYSQL_URL)
             with Session(db.engine) as session:
-                dormitory_deleted = session.query(mysql_models.Relationship).get(body.id)
+                relationship_deleted = session.query(mysql_models.Relationship).get(body.id)
                 session.delete(relationship_deleted)
                 session.commit()
                 session.close()
