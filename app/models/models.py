@@ -157,6 +157,7 @@ class RoomBase(BaseModel):
         actual_tenant_number (Optional[int]): Current number of tenants in the room.
         availability (Optional[bool]): Availability of the room (optional).
     """
+    id_shelter: int
     name: str
     description: Optional[str] = None
     capacity: Optional[int] = None

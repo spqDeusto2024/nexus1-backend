@@ -16,7 +16,7 @@ async def create_room(body: models.RoomCreate,current_user: dict = Depends(get_c
     return roomController.create_room(body)
 
 @router.post('/delete')
-async def delete_room(body: models.RoomCreate,current_user: dict = Depends(get_current_user)):
+async def delete_room(body: models.RoomDelete,current_user: dict = Depends(get_current_user)):
     return roomController.delete_room(body)
   
 @router.get('/get_all')

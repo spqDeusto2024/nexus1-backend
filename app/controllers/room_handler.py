@@ -77,7 +77,7 @@ class Room_Controller:
             )
 
 
-        def get_all(self):
+    def get_all(self):
             """
             Retrieves all rooms from the database.
 
@@ -107,7 +107,7 @@ class Room_Controller:
                     code=500
                 )
 
-        def delete_room(self, body: models.RoomDelete):
+    def delete_room(self, body: models.RoomDelete):
             """
             Deletes a room from the database.
 
@@ -169,7 +169,7 @@ class Room_Controller:
             return ResponseModel(
                 status="ok",
                 message="Room successfully updated",
-                data=dormitory,
+                data=room,
                 code=201
             )
         except Exception as e:
