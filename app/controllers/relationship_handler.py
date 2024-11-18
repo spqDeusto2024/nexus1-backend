@@ -51,7 +51,7 @@ class Relationship_Controller:
         try:
             body_row = mysql_models.Relationship(
                 name=body.name,
-                relationship=body.relationship
+                description=body.description
             )
             db = Nexus1DataBase(var.MYSQL_URL)
             with Session(db.engine) as session:
