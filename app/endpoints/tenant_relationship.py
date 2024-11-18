@@ -23,5 +23,5 @@ async def get_all_tenantRelationship(current_user: dict = Depends(get_current_us
     return tenantRelationshipController.get_all()
 
 @router.post('/update')
-async def update_tenantRelationship(body: models.DormitoryUpdate,current_user: dict = Depends(get_current_user)):
+async def update_tenantRelationship(body: models.TenantRelationshipUpdate,current_user: dict = Depends(get_current_user)):
     return tenantRelationshipController.update_tenantRelationship(body)

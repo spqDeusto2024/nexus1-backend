@@ -153,7 +153,7 @@ class Tenant_Relationship_Controller:
         try:
             db = Nexus1DataBase(var.MYSQL_URL)
             with Session(db.engine) as session:
-                tenantRelationship: mysql_models.TenantRelationship = session.query(mysql_models.TenantRelationship).get(body.id)
+                tenantRelationship: mysql_models.TenantRelationship = session.query(mysql_models.TenantRelationship).get(body.id_tenant_relationship)
                 tenantRelationship.id_tenant_1=body.id_tenant_1
                 tenantRelationship.id_tenant_2=body.id_tenant_2
                 tenantRelationship.id_relationship=body.id_relationship
@@ -164,7 +164,7 @@ class Tenant_Relationship_Controller:
             return ResponseModel(
                 status="ok",
                 message="Tenant_relationship successfully updated",
-                data=dormitory,
+                data=tenantRelationship,
                 code=201
             )
         except Exception as e:
