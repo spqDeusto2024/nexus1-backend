@@ -130,3 +130,119 @@ def test_update_dormitory(mock_update, controller):
     # Assertions
     assert response.status == "ok"
     assert response.message == "Dormitory successfully updated"
+
+
+
+
+
+#Test para excepciones
+@patch('app.controllers.dormitory_handler.Dormitory_Controller.create_dormitory')
+def test_create_dormitory_database_error(mock_create, controller):
+    """Test for create_dormitory handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Database connection failed",
+        data=None,
+        code=500
+    )
+    mock_create.return_value = mock_response
+
+    # Prepara datos de prueba
+    body = DormitoryCreate(
+        id_shelter=1,
+        name="Dormitory A",
+        description="First dormitory",
+        capacity=100,
+        actual_tenant_number=50,
+        availability=True,
+        created_at=datetime.now()
+    )
+
+    # Llama al método
+    response = controller.create_dormitory(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Database connection failed"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.dormitory_handler.Dormitory_Controller.get_all')
+def test_get_all_database_error(mock_get_all, controller):
+    """Test for get_all handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to retrieve dormitories from database",
+        data=None,
+        code=500
+    )
+    mock_get_all.return_value = mock_response
+
+    # Llama al método
+    response = controller.get_all()
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to retrieve dormitories from database"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.dormitory_handler.Dormitory_Controller.delete_dormitory')
+def test_delete_dormitory_database_error(mock_delete, controller):
+    """Test for delete_dormitory handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to delete dormitory from database",
+        data=None,
+        code=500
+    )
+    mock_delete.return_value = mock_response
+
+    # Prepara el body para la solicitud de eliminación
+    body = DormitoryDelete(id=999)  # Un ID inexistente
+
+    # Llama al método
+    response = controller.delete_dormitory(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to delete dormitory from database"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.dormitory_handler.Dormitory_Controller.update_dormitory')
+def test_update_dormitory_database_error(mock_update, controller):
+    """Test for update_dormitory handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to update dormitory in database",
+        data=None,
+        code=500
+    )
+    mock_update.return_value = mock_response
+
+    # Prepara datos de prueba
+    body = DormitoryUpdate(
+        id=999,  # Un ID inexistente
+        id_shelter=1,
+        name="Updated Dormitory",
+        description="Updated description",
+        capacity=150,
+        actual_tenant_number=75,
+        availability=False,
+        created_at=datetime.now()
+    )
+
+    # Llama al método
+    response = controller.update_dormitory(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to update dormitory in database"
+    assert response.data is None
+    assert response.code == 500
+

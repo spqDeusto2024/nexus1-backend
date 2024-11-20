@@ -15,12 +15,10 @@ class ParameterRoomBase(BaseModel):
         date (datetime): Date of the parameter record.
         value (float): Value of the parameter recorded.
     """
-    id_shelter: int
-    name: str
-    description: str
-    capacity: Optional[int] = None
-    actual_tenant_number: Optional[int] = None
-    availability: Optional[bool] = None
+    id_room: int
+    id_parameter: int
+    date: datetime
+    value: float
 
 class ParameterRoomCreate(ParameterRoomBase):
     """
@@ -40,7 +38,7 @@ class ParameterRoomUpdate(ParameterRoomBase):
     """
     id: int
 
-class ParameterRoomDelete(ParameterRoomBase):
+class ParameterRoomDelete(BaseModel):
     """
     Model for deleting an existing room parameter record.
 

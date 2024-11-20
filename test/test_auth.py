@@ -87,3 +87,12 @@ def test_login_invalid_password(mock_get_admin_by_username, controller):
     
     assert exc_info.value.status_code == 401
     assert exc_info.value.detail == "Invalid username or password"
+
+
+
+#Test para las excepciones
+
+
+
+
+

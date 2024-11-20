@@ -133,3 +133,102 @@ def test_get_role_by_name(mock_get_all, controller):
     assert response.status == "ok"
     assert response.message == "Role retrieved successfully"
     assert response.data.get("name") == "TestRole"
+
+
+
+
+#EXCEPTIONS TESTS
+@patch('app.controllers.role_handler.Role_Controller.create_role')
+def test_create_role_database_error(mock_create, controller):
+    """Test for create_role handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Database connection failed",
+        data=None,
+        code=500
+    )
+    mock_create.return_value = mock_response
+
+    # Prepara datos de prueba
+    body = RoleCreate(name="TestRole", description="Test Description", id_room_relationship=1, created_at=datetime.now())
+
+    # Llama al método
+    response = controller.create_role(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Database connection failed"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.role_handler.Role_Controller.get_all')
+def test_get_all_roles_database_error(mock_get_all, controller):
+    """Test for get_all handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to retrieve roles from database",
+        data=None,
+        code=500
+    )
+    mock_get_all.return_value = mock_response
+
+    # Llama al método
+    response = controller.get_all()
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to retrieve roles from database"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.role_handler.Role_Controller.delete_role')
+def test_delete_role_database_error(mock_delete, controller):
+    """Test for delete_role handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to delete role from database",
+        data=None,
+        code=500
+    )
+    mock_delete.return_value = mock_response
+
+    # Prepara datos de prueba
+    body = RoleDelete(id=999)  # Un ID inexistente
+
+    # Llama al método
+    response = controller.delete_role(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to delete role from database"
+    assert response.data is None
+    assert response.code == 500
+
+@patch('app.controllers.role_handler.Role_Controller.update_role')
+def test_update_role_database_error(mock_update, controller):
+    """Test for update_role handling a database error."""
+    # Simula una respuesta de error
+    mock_response = ResponseModel(
+        status="error",
+        message="Failed to update role in database",
+        data=None,
+        code=500
+    )
+    mock_update.return_value = mock_response
+
+    # Prepara datos de prueba
+    body = RoleUpdate(id=999, name="UpdatedRole", description="Updated Description", id_room_relationship=2)
+
+    # Llama al método
+    response = controller.update_role(body)
+
+    # Validaciones
+    assert response.status == "error"
+    assert response.message == "Failed to update role in database"
+    assert response.data is None
+    assert response.code == 500
+
+
