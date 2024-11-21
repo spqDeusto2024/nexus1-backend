@@ -16,7 +16,7 @@ async def create_parameter(body: models.ParameterCreate,current_user: dict = Dep
 
 @router.post('/delete')
 async def delete_parameter(body: models.ParameterDelete,current_user: dict = Depends(get_current_user)):
-    return parameterController.delete_Parameter(body)
+    return parameterController.delete_parameter(body)
   
 @router.get('/get_all')
 async def get_all_parameter(current_user: dict = Depends(get_current_user)):
