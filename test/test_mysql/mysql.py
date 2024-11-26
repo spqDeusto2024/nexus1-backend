@@ -1,12 +1,12 @@
 import sqlalchemy as db
-from app.mysql.base import Base
+from base import Base
 from app.mysql.models import *
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import inspect
 
 
 
-class Nexus1DataBase():
+class TestDataBase():
     """
     Class used for centralizng the database creation and preparing methods.
 

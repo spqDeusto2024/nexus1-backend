@@ -49,3 +49,15 @@ services:
           target: /code/app
         - action: rebuild
           path: ./app/package.json
+  db:
+    image: mysql:8.0.31
+    container_name: "Test_Database"
+    volumes:
+      - ./test :/code/test
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    ports:
+      - "3308:3308"

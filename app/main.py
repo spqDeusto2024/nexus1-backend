@@ -10,6 +10,9 @@ import app.utils.vars as var
 
 
 
+
+
+
 app = FastAPI()
 nexusDDBB = Nexus1DataBase(var.MYSQL_URL)
 

@@ -48,6 +48,13 @@ jobs:
       #     pip install --no-cache-dir --upgrade -r requirements.txt
 
       # Ejecutar pruebas unitarias
+
+
+      - name : Bring up test-database up
+        run: | 
+          docker exec fastapi-nexus1 python /code/test_database_run.py
+
+
       - name: Run tests inside Docker container
         run: |
           # Reemplaza 'app' por el nombre del servicio donde quieres correr las pruebas
