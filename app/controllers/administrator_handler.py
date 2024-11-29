@@ -2,8 +2,7 @@ import app.models.models as models
 from app.models.response_models import ResponseModel
 import app.mysql.models as mysql_models
 from app.mysql.mysql import Nexus1DataBase
-from app.utils.hashing import verify_password,hash_password
-
+from app.utils.hashing import verify_password, hash_password
 import app.utils.vars as var
 from sqlalchemy.orm import Session
 
@@ -12,16 +11,17 @@ class Administrator_Controller:
     Controller for managing administrator-related operations.
 
     This class handles the creation, updating, deletion, retrieval, and authentication of administrators in the database.
-
-    
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Administrator_Controller class.
+
+        Parameters:
+            db (object): An instance of a database (e.g., Nexus1DataBase) that will be used to create the database connection.
         """
-        pass
-    
+        self.db = db  # Ya se pasa directamente la instancia de la base de datos
+
     def healthz(self):
         """
         Checks the status of the connection.
@@ -43,15 +43,15 @@ class Administrator_Controller:
         """
         try:
             body_row = mysql_models.Administrator(username=body.username, password=hash_password(body.password))
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 session.add(body_row)
                 session.commit()
+                session.refresh(body_row)
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Administrator inserted into database successfully",
-                data=None,
+                data=body_row,
                 code=201
             )
         except Exception as e:
@@ -71,9 +71,8 @@ class Administrator_Controller:
             ResponseModel: A response model with the status of the operation, message, and administrator data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 response = session.query(mysql_models.Administrator).all()
                 session.close()
             return ResponseModel(
@@ -102,8 +101,7 @@ class Administrator_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted administrator data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 administrator_deleted = session.query(mysql_models.Administrator).get(body.id)
                 session.delete(administrator_deleted)
                 session.commit()
@@ -134,12 +132,11 @@ class Administrator_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated administrator data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 administrator: mysql_models.Administrator = session.query(mysql_models.Administrator).get(body.id)
                 administrator.username = body.username
-                administrator.password = body.password
-                session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
+                administrator.password = hash_password(body.password)  # Ensure password is hashed
+                session.dirty  # La sesión se marca como sucia automáticamente
                 session.commit()
                 session.close()
             return ResponseModel(
@@ -170,8 +167,7 @@ class Administrator_Controller:
             ResponseModel: A response model with the status of the operation, message, and administrator data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 admin = session.query(mysql_models.Administrator).filter_by(username=username).first()
                 session.close()
 

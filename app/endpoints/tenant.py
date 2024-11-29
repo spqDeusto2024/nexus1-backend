@@ -2,9 +2,13 @@ from fastapi import APIRouter, Depends
 from app.controllers.tenant_handler import Tenant_Controller
 from app.auth.dependencies import get_current_user
 import app.models.models as models
+from app.mysql.mysql import Nexus1DataBase
+import app.utils.vars as var
+
+nexus1 = Nexus1DataBase(var.MYSQL_URL)
 
 router = APIRouter()
-tenantController = Tenant_Controller()
+tenantController = Tenant_Controller(nexus1)
 
 @router.get("/healthz")
 async def tenant_healthz(current_user: dict = Depends(get_current_user)):

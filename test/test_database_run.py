@@ -1,3 +1,10 @@
-from test_mysql.mysql import TestDataBase
+import mysql
 
-testDataBase = TestDataBase("mysql://test:test@0.0.0.0:3308/test")
+print("se ha corrido este hijoputa")
+
+
+testDataBase = mysql.TestDataBase("mysql://test:test@test-database:3306/test")
+testDataBase.init_database()
+
+
+print("se ha corrido este hijoputa")

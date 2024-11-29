@@ -1,261 +1,152 @@
 import pytest
-from unittest.mock import patch, MagicMock
-from app.controllers.administrator_handler import Administrator_Controller
-from app.models.models import AdministratorCreate, AdministratorDelete, AdministratorUpdate
-from app.models.response_models import ResponseModel
+from sqlalchemy.orm import Session
+from app.models.models import *  # Tus modelos Pydantic
+from app.controllers.administrator_handler import Administrator_Controller  # El controlador que quieres probar
+from mysql import TestDataBase  # Tu clase para la base de datos
+from sqlalchemy import create_engine
+import app.mysql.models as mysql_models  # El modelo SQLAlchemy de Shelter, que usas en la base de datos
+import app.utils.vars as var
 from datetime import datetime
-
-@pytest.fixture
-def controller():
-    """Fixture to initialize the controller."""
-    return Administrator_Controller()
+from app.utils.hashing import hash_password
 
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.healthz', return_value={"status": "ok"})
-def test_healthz(mock_healthz, controller):
-    """Test for the healthz method."""
-    response = controller.healthz()
-    assert response == {"status": "ok"}
+
+@pytest.fixture(scope="module")
+def db_session():
+    # Crear una sesión de base de datos para usar en las pruebas
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración de base de datos
+    session = db.get_session()
+    yield session
+    session.close()
 
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.create_administrator')
-def test_create_administrator(mock_create, controller):
-    """Test for the create_administrator method."""
-    # Simula la respuesta de create_administrator
-    mock_response = ResponseModel(
-        status="ok",
-        message="Administrator inserted into database successfully",
-        data=None,
-        code=201
-    )
-    mock_create.return_value = mock_response  # Aquí usamos el objeto real de ResponseModel.
 
-    # Llama al método con datos de prueba
-    body = AdministratorCreate(username="testadmin", password="password123", created_at=datetime.now())
-    response = controller.create_administrator(body)
 
-    # Assertions para verificar que la respuesta es correcta
+def test_create_administrator(db_session):
+    # Usamos una base de datos de pruebas (configurar adecuadamente el URL de conexión)
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración de base de datos
+    controller = Administrator_Controller(db)
+
+    # Creamos los datos del administrador
+    admin_data = AdministratorCreate(username="testadmin", password="password123",created_at = datetime.now())
+
+    try:
+        # Intentamos crear el administrador en la base de datos
+        response = controller.create_administrator(admin_data)
+        print(response)
+    except Exception as e:
+        raise e
+
+    # Validamos que la respuesta sea la esperada
     assert response.status == "ok"
-    assert response.message == "Administrator inserted into database successfully"
-    assert response.data is None
     assert response.code == 201
+    assert response.message == "Administrator inserted into database successfully"
 
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.get_all')
-def test_get_all(mock_get_all, controller):
-    """Test for the get_all method."""
-    # Mock the response of get_all
+def test_get_all_administrators(db_session):
+    db = TestDataBase("mysql://test:test@test-database:3306/test")
+    controller = Administrator_Controller(db)
+   
+    # Creamos los datos del administrador
+    admin_data = AdministratorCreate(username="testadmin", password="password123",created_at = datetime.now())
 
-    mock_administrators = [
-        MagicMock(username="admin1", password="hashed_pass1"),
-        MagicMock(username="admin2", password="hashed_pass2"),
-    ]
+    try:
+        response = controller.get_all()
+        print(response)
+    except Exception as e:
+        raise e
 
-    mock_response = ResponseModel(
-                status="ok",
-                message="All administrators successfully retrieved",
-                data = mock_administrators,
-                code=201
-    )
-    
-    mock_get_all.return_value = mock_response
-    response = controller.get_all()
-    # Assertions
+    # Validamos que se obtuvieron los administradores
     assert response.status == "ok"
-    assert response.message == "All administrators successfully retrieved"
-    assert len(response.data) == 2
+    assert isinstance(response.data, list)
 
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.delete_administrator')
-def test_delete_administrator(mock_delete, controller):
-    """Test for the delete_administrator method."""
-    
-    # Mock the response of delete_administrator
-    mock_response = ResponseModel(
-        status="ok",
-        message="Administrator successfully deleted",
-        data=None,
-        code=200
-    )
-    mock_delete.return_value = mock_response
-    
-    # Prepare the body for the delete request
-    body = AdministratorDelete(id=1)
-    
-    # Call the method
-    response = controller.delete_administrator(body)
+def test_delete_administrator(db_session):
+    db = TestDataBase("mysql://test:test@test-database:3306/test")
+    controller = Administrator_Controller(db)
 
-    # Assertions
+    # Creamos el administrador para poder eliminarlo después
+    admin_data = AdministratorCreate(username="deleteadmin", password="password123",created_at = datetime.now())
+    response_create = controller.create_administrator(admin_data)
+    admin_id = response_create.data.id  # Suponiendo que la respuesta contiene el ID del nuevo administrador
+
+    # Creamos el objeto para eliminar
+    delete_data = AdministratorDelete(id=admin_id)
+
+    try:
+        # Intentamos eliminar el administrador
+        response = controller.delete_administrator(delete_data)
+        print(response)
+    except Exception as e:
+        raise e
+
+    # Validamos que la eliminación fue exitosa
     assert response.status == "ok"
+    assert response.code == 201
     assert response.message == "Administrator successfully deleted"
 
 
+def test_update_administrator(db_session):
+    db = TestDataBase("mysql://test:test@test-database:3306/test")
+    controller = Administrator_Controller(db)
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.update_administrator')
-def test_update_administrator(mock_update, controller):
-    """Test for the update_administrator method."""
-    
-    # Mock the response of update_administrator
-    mock_response = ResponseModel(
-        status="ok",
-        message="Administrator successfully updated",
-        data=None,
-        code=200
-    )
-    mock_update.return_value = mock_response
-    
-    # Prepare the body for the update request
-    body = AdministratorUpdate(id=1, username="updatedadmin", password="updatedpassword")
-    
-    # Call the method
-    response = controller.update_administrator(body)
+    # Creamos el administrador
+    admin_data = AdministratorCreate(username="updateadmin", password="password123", created_at=datetime.now())
+    response_create = controller.create_administrator(admin_data)
+    admin_id = response_create.data.id  # Suponiendo que la respuesta contiene el ID del nuevo administrador
 
-    # Assertions
+    # Datos actualizados para el administrador
+    update_data = AdministratorUpdate(id=admin_id, username="updatedadmin", password="newpassword123")
+
+    try:
+        # Intentamos actualizar el administrador
+        response = controller.update_administrator(update_data)
+        print(response)
+
+        # Recuperamos el administrador actualizado
+        response_get = controller.get_admin_by_username("updatedadmin")
+        updated_admin = response_get.data  # Recuperamos el objeto administrador actualizado
+    except Exception as e:
+        raise e
+
+    # Validamos que la actualización fue exitosa
     assert response.status == "ok"
+    assert response.code == 201
     assert response.message == "Administrator successfully updated"
+    assert updated_admin.username == "updatedadmin"  # Validamos con el administrador actualizado
 
 
-@patch('app.controllers.administrator_handler.Administrator_Controller.get_admin_by_username')
-def test_get_admin_by_username(mock_get_admin, controller):
-    """Test for the get_admin_by_username method."""
+
+def test_get_admin_by_username():
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Base de datos de prueba
+    controller = Administrator_Controller(db)
+
+    # Creamos un nuevo administrador para probar
+    admin_data = AdministratorCreate(username="prueba", password="salvaje",created_at = datetime.now())
+    response_create = controller.create_administrator(admin_data)
     
-    # Mock the response of get_admin_by_username
-    mock_response = ResponseModel(
-        status="ok",
-        message="Administrator retrieved successfully",
-        data={"username": "manuel"},
-        code=200
-    )
-    mock_get_admin.return_value = mock_response
-    
-    # Prepare the username for the request
-    username = "manuel"
-    
-    # Call the method
-    response = controller.get_admin_by_username(username)
+    # Verificamos que la creación fue exitosa
+    assert response_create.status == "ok"
+    assert response_create.code == 201
+    assert response_create.message == "Administrator inserted into database successfully"
 
-    # Assertions
-    assert response.status == "ok"
-    assert response.message == "Administrator retrieved successfully"
-    assert response.data.get("username") == username
+    # Ahora intentamos recuperar al administrador por su nombre de usuario
+    response_get = controller.get_admin_by_username("testadmin")
 
+    # Verificamos que la respuesta es correcta
+    assert response_get.status == "ok"
+    assert response_get.code == 200
+    assert response_get.message == "Administrator retrieved successfully"
 
+    # Comprobamos que los datos recuperados son correctos
+    assert response_get.data.username == "testadmin"
+    assert response_get.data.password != "testpassword123"  # Aseguramos que la contraseña está cifrada
+    assert response_get.data.id is not None  # Verificamos que el ID esté presente
 
-#Tests para excepciones:
-@patch('app.controllers.administrator_handler.Administrator_Controller.create_administrator')
-def test_create_administrator_database_error(mock_create, controller):
-    """Test for create_administrator handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Database connection failed",
-        data=None,
-        code=500
-    )
-    mock_create.return_value = mock_response
+    # Intentamos recuperar un administrador que no existe
+    response_get_nonexistent = controller.get_admin_by_username("nonexistentuser")
 
-    # Prepara datos de prueba
-    body = AdministratorCreate(username="testadmin", password="password123", created_at=datetime.now())
-
-    # Llama al método
-    response = controller.create_administrator(body)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Database connection failed"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.administrator_handler.Administrator_Controller.get_all')
-def test_get_all_database_error(mock_get_all, controller):
-    """Test for get_all handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to retrieve administrators from database",
-        data=None,
-        code=500
-    )
-    mock_get_all.return_value = mock_response
-
-    # Llama al método
-    response = controller.get_all()
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to retrieve administrators from database"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.administrator_handler.Administrator_Controller.delete_administrator')
-def test_delete_administrator_database_error(mock_delete, controller):
-    """Test for delete_administrator handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to delete administrator from database",
-        data=None,
-        code=500
-    )
-    mock_delete.return_value = mock_response
-
-    # Prepara el body para la solicitud de eliminación
-    body = AdministratorDelete(id=999)  # Un ID inexistente
-
-    # Llama al método
-    response = controller.delete_administrator(body)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to delete administrator from database"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.administrator_handler.Administrator_Controller.update_administrator')
-def test_update_administrator_database_error(mock_update, controller):
-    """Test for update_administrator handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to update administrator in database",
-        data=None,
-        code=500
-    )
-    mock_update.return_value = mock_response
-
-    # Prepara datos de prueba
-    body = AdministratorUpdate(id=999, username="updatedadmin", password="updatedpassword")
-
-    # Llama al método
-    response = controller.update_administrator(body)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to update administrator in database"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.administrator_handler.Administrator_Controller.get_admin_by_username')
-def test_get_admin_by_username_error(mock_get_admin, controller):
-    """Test for get_admin_by_username handling an error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Administrator not found",
-        data=None,
-        code=404
-    )
-    mock_get_admin.return_value = mock_response
-
-    # Prepara el username para la solicitud
-    username = "nonexistentadmin"
-
-    # Llama al método
-    response = controller.get_admin_by_username(username)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Administrator not found"
-    assert response.data is None
-    assert response.code == 404
-
+    # Verificamos que la respuesta es la esperada para un usuario no existente
+    assert response_get_nonexistent.status == "error"
+    assert response_get_nonexistent.code == 404
+    assert response_get_nonexistent.message == "Administrator not found"

@@ -6,28 +6,25 @@ from app.mysql.mysql import Nexus1DataBase
 import app.utils.vars as var
 from sqlalchemy.orm import Session
 
-
 class Tenant_Relationship_Controller:
     """
     Controller for managing tenant_relationship-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of tenant_relationship in the database.
-
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Tenant_Relationship_Controller class.
 
-        This constructor does not take any parameters and does not perform any operation.
+        Parameters:
+            db (object): An instance of a database (e.g., Nexus1DataBase) that will be used to create the database connection.
         """
-        pass
+        self.db = db  # Ya se pasa directamente la instancia de la base de datos
     
     def healthz(self):
         """
         Checks the status of the connection.
-
-        This method returns a "ok" status message indicating that the API is working correctly.
 
         Returns:
             dict: A dictionary with the status "ok".
@@ -38,9 +35,6 @@ class Tenant_Relationship_Controller:
         """
         Creates a new tenant_relationship in the database.
 
-        This method takes a Tenant_RelationshipCreate object, which contains the necessary data to create a tenant_relationship
-        and saves it to the database.
-
         Parameters:
             body (models.Tenant_RelationshipCreate): An object containing the tenant_relationship data to create.
 
@@ -49,12 +43,11 @@ class Tenant_Relationship_Controller:
         """
         try:
             body_row = mysql_models.TenantRelationship(
-                id_tenant_1 = body.id_tenant_1,
-                id_tenant_2 = body.id_tenant_2,
-                id_relationship = body.id_relationship
+                id_tenant_1=body.id_tenant_1,
+                id_tenant_2=body.id_tenant_2,
+                id_relationship=body.id_relationship
             )
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 session.add(body_row)
                 session.commit()
                 session.close()
@@ -77,15 +70,12 @@ class Tenant_Relationship_Controller:
         """
         Retrieves all tenant_relationship from the database.
 
-        This method queries all tenant_relationship records in the database and returns them.
-
         Returns:
             ResponseModel: A response model with the status of the operation, message, and tenant_relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 response = session.query(mysql_models.TenantRelationship).all()
                 session.close()
             return ResponseModel(
@@ -103,11 +93,9 @@ class Tenant_Relationship_Controller:
                 code=500
             )
 
-    def delete_tenantRelationship(self, body: models.TenantRelationshipDelete):
+    def delete_tenant_relationship(self, body: models.TenantRelationshipDelete):
         """
-        Deletes a dormitory from the database.
-
-        This method takes a tenant_relationship object, which contains the ID of the tenant_relationship to delete.
+        Deletes a tenant_relationship from the database.
 
         Parameters:
             body (models.TenantRelationshipDelete): An object containing the tenant_relationship ID to delete.
@@ -116,8 +104,7 @@ class Tenant_Relationship_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted tenant_relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 tenant_relationship_deleted = session.query(mysql_models.TenantRelationship).get(body.id_tenant_relationship)
                 session.delete(tenant_relationship_deleted)
                 session.commit()
@@ -137,12 +124,9 @@ class Tenant_Relationship_Controller:
                 code=500
             )
 
-    def update_tenantRelationship(self, body: models.TenantRelationshipUpdate):
+    def update_tenant_relationship(self, body: models.TenantRelationshipUpdate):
         """
         Updates an existing tenant_relationship in the database.
-
-        This method takes a TenantRelationshipUpdate object, which contains the updated data for the tenant_relationship,
-        and updates the corresponding record in the database.
 
         Parameters:
             body (models.TenantRelationshipUpdate): An object containing the updated tenant_relationship data.
@@ -151,20 +135,19 @@ class Tenant_Relationship_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated tenant_relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
-                tenantRelationship: mysql_models.TenantRelationship = session.query(mysql_models.TenantRelationship).get(body.id_tenant_relationship)
-                tenantRelationship.id_tenant_1=body.id_tenant_1
-                tenantRelationship.id_tenant_2=body.id_tenant_2
-                tenantRelationship.id_relationship=body.id_relationship
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
+                tenant_relationship: mysql_models.TenantRelationship = session.query(mysql_models.TenantRelationship).get(body.id_tenant_relationship)
+                tenant_relationship.id_tenant_1 = body.id_tenant_1
+                tenant_relationship.id_tenant_2 = body.id_tenant_2
+                tenant_relationship.id_relationship = body.id_relationship
 
-                session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
+                session.dirty  # La sesión se marca como sucia automáticamente
                 session.commit()
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Tenant_relationship successfully updated",
-                data=tenantRelationship,
+                data=tenant_relationship,
                 code=201
             )
         except Exception as e:
@@ -175,4 +158,3 @@ class Tenant_Relationship_Controller:
                 data=None,
                 code=500
             )
-

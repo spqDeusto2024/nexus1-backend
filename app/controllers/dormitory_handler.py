@@ -1,15 +1,7 @@
 import app.models.models as models
 from app.models.response_models import ResponseModel
 import app.mysql.models as mysql_models
-from app.mysql.mysql import Nexus1DataBase
-
-import app.utils.vars as var
 from sqlalchemy.orm import Session
-
-
-
-
-
 
 
 class Dormitory_Controller:
@@ -17,18 +9,17 @@ class Dormitory_Controller:
     Controller for managing dormitory-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of dormitories in the database.
-
- 
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Dormitory_Controller class.
 
-        This constructor does not take any parameters and does not perform any operation.
+        Parameters:
+            db (object): An instance of a database (e.g., Nexus1DataBase) that will be used to create the database connection.
         """
-        pass
-    
+        self.db = db  # Recibe la instancia de la base de datos desde fuera
+
     def healthz(self):
         """
         Checks the status of the connection.
@@ -62,22 +53,21 @@ class Dormitory_Controller:
                 actual_tenant_number=body.actual_tenant_number,
                 availability=body.availability
             )
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 session.add(body_row)
                 session.commit()
+                session.refresh(body_row)
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Dormitory inserted into database successfully",
-                data=None,
+                data=body_row,
                 code=201
             )
         except Exception as e:
-            print("Error inserting dormitory into database")
             return ResponseModel(
                 status="error",
-                message=str(e),
+                message=f"Error inserting dormitory into database: {str(e)}",
                 data=None,
                 code=500
             )
@@ -92,22 +82,18 @@ class Dormitory_Controller:
             ResponseModel: A response model with the status of the operation, message, and dormitory data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 response = session.query(mysql_models.Dormitory).all()
-                session.close()
             return ResponseModel(
                 status="ok",
                 message="All dormitories successfully retrieved",
                 data=response,
-                code=201
+                code=200
             )
         except Exception as e:
-            print("Error retrieving dormitories from database")
             return ResponseModel(
                 status="error",
-                message=str(e),
+                message=f"Error retrieving dormitories from database: {str(e)}",
                 data=None,
                 code=500
             )
@@ -125,23 +111,24 @@ class Dormitory_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted dormitory data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 dormitory_deleted = session.query(mysql_models.Dormitory).get(body.id)
-                session.delete(dormitory_deleted)
-                session.commit()
-                session.close()
+                if dormitory_deleted:
+                    session.delete(dormitory_deleted)
+                    session.commit()
+                    session.close()
+                else:
+                    raise Exception("Dormitory not found")
             return ResponseModel(
                 status="ok",
                 message="Dormitory successfully deleted",
                 data=dormitory_deleted,
-                code=201
+                code=200
             )
         except Exception as e:
-            print("Error deleting dormitory from database")
             return ResponseModel(
                 status="error",
-                message=str(e),
+                message=f"Error deleting dormitory from database: {str(e)}",
                 data=None,
                 code=500
             )
@@ -160,29 +147,28 @@ class Dormitory_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated dormitory data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
-                dormitory: mysql_models.Dormitory = session.query(mysql_models.Dormitory).get(body.id)
-                dormitory.name = body.name
-                dormitory.description = body.description
-                dormitory.capacity = body.capacity
-                dormitory.actual_tenant_number = body.actual_tenant_number
-                dormitory.availability = body.availability
-                session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
-                session.commit()
-                session.close()
+            with Session(self.db.engine) as session:
+                dormitory = session.query(mysql_models.Dormitory).get(body.id)
+                if dormitory:
+                    dormitory.name = body.name
+                    dormitory.description = body.description
+                    dormitory.capacity = body.capacity
+                    dormitory.actual_tenant_number = body.actual_tenant_number
+                    dormitory.availability = body.availability
+                    session.commit()
+                    session.close()
+                else:
+                    raise Exception("Dormitory not found")
             return ResponseModel(
                 status="ok",
                 message="Dormitory successfully updated",
                 data=dormitory,
-                code=201
+                code=200
             )
         except Exception as e:
-            print("Error updating dormitory in database")
             return ResponseModel(
                 status="error",
-                message=str(e),
+                message=f"Error updating dormitory in database: {str(e)}",
                 data=None,
                 code=500
             )
-

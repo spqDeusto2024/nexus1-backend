@@ -2,7 +2,9 @@
 __pycache__
 myCredentials.properties
 mysql/data/*
-
+test_db_data/*
+mysql
+    
 # Ignorar la carpeta build (archivos generados por Sphinx)
 build/
 

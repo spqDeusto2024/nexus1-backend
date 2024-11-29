@@ -33,10 +33,15 @@ class Nexus1DataBase():
         Returns:
             None
         """
-        inspector = inspect(self.engine)
-        if "administrators" not in inspector.get_table_names():
-            Base.metadata.create_all(self.engine)
-        else:
-            print("Tables already exists")
-        return
+        try:
+            inspector = inspect(self.engine)
+            if "administrators" not in inspector.get_table_names():
+                Base.metadata.create_all(self.engine)
+                print("tables created on nexus")
+            else:
+                print("Tables already exists")
+            return
+        except Exception as e:
+            raise e
+
 

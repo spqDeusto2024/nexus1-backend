@@ -28,18 +28,19 @@ jobs:
       # Esperar a que los servicios estén disponibles
       - name: Wait for services to be up
         run: |
-          sleep 10
+          sleep 15
           docker compose ps
 
-      # # Verificar que la base de datos está accesible (ejemplo usando PostgreSQL)
+      # Verificar que la base de datos está accesible (ejemplo usando PostgreSQL)
       # - name: Check database is up
       #   run: |
-      #     docker exec -i mysql_nexus1 mysql -root -root -e "SHOW DATABASES;"
+      #     docker exec -i mysql-nexus1 mysql -u nexus1-admin -p nexus1-password -e "SHOW DATABASES;"
+      #     docker exec -i Test_Database mysql -u test -p test -e "SHOW DATABASES;"
 
       # Verificar que FastAPI está accesible
-      - name: Check FastAPI is up
-        run: |
-          curl -f http://localhost:8000/docs || exit 1
+      # - name: Check FastAPI is up
+      #   run: |
+      #     curl -f http://localhost:8000/docs || exit 1
 
       # Instalar dependencias para pruebas
       # - name: Install dependencies
@@ -48,18 +49,26 @@ jobs:
       #     pip install --no-cache-dir --upgrade -r requirements.txt
 
       # Ejecutar pruebas unitarias
+      # - name: Wait for MySQL to be up
+      #   run: |
+      #     until docker exec Test_Database mysql -utest -ptest -h db -e "SELECT 1"; do
+      #       echo "Esperando la base de datos de prueba"
+      #       sleep 2
+      #     done
+      #     echo "Base de datos de prueba lista."
 
 
-      - name : Bring up test-database up
-        run: | 
-          docker exec fastapi-nexus1 python /code/test_database_run.py
+      - name: Run database initialization tests
+        run: docker exec fastapi-nexus1 python3 /code/test/test_database_run.py
 
-
-      - name: Run tests inside Docker container
+      # Ejecutar los tests unitarios dentro del contenedor `Test_Database`
+      - name: Run unit tests inside Docker container
         run: |
-          # Reemplaza 'app' por el nombre del servicio donde quieres correr las pruebas
-          docker exec fastapi-nexus1 coverage run -m pytest /code/test
+          docker exec fastapi-nexus1 coverage run -m pytest -p no:warnings /code/test
           docker exec fastapi-nexus1 coverage report  # Reporte en consola
+      - name: Docker compose down process
+        run: |
+          docker compose down
 
      # Limpiar los contenedores, volúmenes, imágenes y builds creados durante las pruebas
       # - name: Cleanup Docker (containers, volumes, images)

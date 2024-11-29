@@ -358,7 +358,7 @@ class ShelterUpdate(ShelterBase):
         description (Optional[str]): Description of the shelter (optional).
     """
     id: int
-    description: Optional[str] = None
+    # description: Optional[str] = None
 
 class ShelterDelete(BaseModel):
     """

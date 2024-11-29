@@ -12,17 +12,18 @@ class Relationship_Controller:
     Controller for managing relationship-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of relationships in the database.
-
-    
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Relationship_Controller class.
 
-        This constructor does not take any parameters and does not perform any operation.
+        This constructor takes an instance of the database connection (e.g., Nexus1DataBase) from outside.
+
+        Parameters:
+            db (object): An instance of a database connection (e.g., Nexus1DataBase).
         """
-        pass
+        self.db = db  # Recibe la instancia de la base de datos desde fuera
     
     def healthz(self):
         """
@@ -53,8 +54,7 @@ class Relationship_Controller:
                 name=body.name,
                 description=body.description
             )
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 session.add(body_row)
                 session.commit()
                 session.close()
@@ -83,9 +83,8 @@ class Relationship_Controller:
             ResponseModel: A response model with the status of the operation, message, and relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 response = session.query(mysql_models.Relationship).all()
                 session.close()
             return ResponseModel(
@@ -116,8 +115,7 @@ class Relationship_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 relationship_deleted = session.query(mysql_models.Relationship).get(body.id)
                 session.delete(relationship_deleted)
                 session.commit()
@@ -151,11 +149,10 @@ class Relationship_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated relationship data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 relationship: mysql_models.Relationship = session.query(mysql_models.Relationship).get(body.id)
-                relationship.name=body.name
-                relationship.description=body.description
+                relationship.name = body.name
+                relationship.description = body.description
                 
                 session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
                 session.commit()
@@ -174,4 +171,3 @@ class Relationship_Controller:
                 data=None,
                 code=500
             )
-

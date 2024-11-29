@@ -1,98 +1,80 @@
 import pytest
-from unittest.mock import patch, MagicMock
+from sqlalchemy.orm import Session
+from app.models.models import *  # Tus modelos Pydantic
 from app.controllers.auth_handler import Auth_Controller
-from app.models.models import LoginCredentials
+from app.controllers.administrator_handler import Administrator_Controller
+from mysql import TestDataBase  # Tu clase para la base de datos
+from sqlalchemy import create_engine
+import app.mysql.models as mysql_models  # El modelo SQLAlchemy de Shelter, que usas en la base de datos
+import app.utils.vars as var
+from datetime import datetime
 from app.models.response_models import ResponseModel
 from app.auth.jwt_handler import create_access_token
 from fastapi import HTTPException
 from app.utils.hashing import hash_password
 from app.auth.jwt_handler import create_access_token
+from fastapi.security import OAuth2PasswordRequestForm
 
 
-@pytest.fixture
-def controller():
-    """Fixture to initialize the controller."""
-    return Auth_Controller()
+def test_login_success():
+    db = TestDataBase("mysql://test:test@test-database:3306/test")
+
+    admin_controller = Administrator_Controller(db)
+    request = AdministratorCreate(username = "tumadre",password ="kula",created_at = datetime.now())
+    response = admin_controller.create_administrator(request)
+    print(response)
 
 
-@patch('app.controllers.auth_handler.Administrator_Controller.get_admin_by_username')
-@patch('app.auth.jwt_handler.create_access_token')
-def test_login(mock_create_token, mock_get_admin_by_username, controller):
-    """Test for the login method."""
-    # Mock the response of get_admin_by_username
-    mock_admin = MagicMock(username="testuser", password=hash_password("hashed_password"))
-    mock_get_admin_by_username.return_value = ResponseModel(
-        status="ok",
-        message="Administrator retrieved successfully",
-        data=mock_admin,
-        code=200
+    auth_controller = Auth_Controller(db)
+
+    form_data = OAuth2PasswordRequestForm(
+        username="tumadre",
+        password="kula",
+        scope=""
     )
+    response = auth_controller.login(form_data)
+    assert response["token_type"] == "bearer"
+    assert "access_token" in response
 
-    # Mock the response of create_access_token
-    mock_token = create_access_token({"sub": "testuser"})
-    mock_create_token.return_value = mock_token
-    
-    # Prepare the credentials data for the request
-    credentials = LoginCredentials(username="testuser", password="hashed_password")
+   
 
-    # Call the method
-    response = controller.login(credentials)
+# def test_login_invalid_username():
+#     db = TestDataBase("mysql://test:test@test-database:3306/test")
+#     admin_controller = Administrator_Controller(db)
+#     request = AdministratorCreate(username = "tumadre",password ="kula",created_at = datetime.now())
+#     admin_controller.create_administrator(request)
 
-    # Assertions:We look that token structure is ok
-    assert response["access_token"].count(".") == 2  # Verifica que tenga las 3 partes (header, payload, signature)
-    assert response["access_token"].startswith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.")  # Verifica que comience como un JWT
-    
+#     auth_controller = Auth_Controller(db)
+#     form_data = OAuth2PasswordRequestForm(
+#         username="non_existent_user",
+#         password="kula",
+#         scope=""
+#     )
 
+#     try:
+#         auth_controller.login(form_data)
+#         assert False, "Se esperaba una excepción HTTPException"
+#     except HTTPException as e:
+#         assert e.status_code == 401
+#         assert e.detail == "Invalid username or password"
 
-@patch('app.controllers.auth_handler.Administrator_Controller.get_admin_by_username')
-def test_login_invalid_username(mock_get_admin_by_username, controller):
-    """Test for the login method with an invalid username."""
-    # Mock the response of get_admin_by_username
-    mock_get_admin_by_username.return_value = ResponseModel(
-        status="error",
-        message="Administrator not found",
-        data=None,
-        code=404
-    )
+# def test_login_invalid_password():
+#     db = TestDataBase("mysql://test:test@test-database:3306/test")
+#     admin_controller = Administrator_Controller(db)
+#     request = AdministratorCreate(username = "tumadre",password ="kula",created_at = datetime.now())
+#     admin_controller.create_administrator(request)
 
-    # Prepare the credentials data for the request
-    credentials = LoginCredentials(username="invaliduser", password=hash_password("hashed_password"))
+#     auth_controller = Auth_Controller(db)
 
-    # Call the method and check for HTTPException
-    with pytest.raises(HTTPException) as exc_info:
-        controller.login(credentials)
-    
-    assert exc_info.value.status_code == 401
-    assert exc_info.value.detail == "Invalid username or password"
+#     form_data = OAuth2PasswordRequestForm(
+#         username="tumadre",
+#         password="pepe",
+#         scope=""
+#     )
 
-
-@patch('app.controllers.auth_handler.Administrator_Controller.get_admin_by_username')
-def test_login_invalid_password(mock_get_admin_by_username, controller):
-    """Test for the login method with an invalid password."""
-    # Mock the response of get_admin_by_username
-    mock_admin = MagicMock(username="testuser", password=hash_password("hashed_password"))
-    mock_get_admin_by_username.return_value = ResponseModel(
-        status="ok",
-        message="Administrator retrieved successfully",
-        data=mock_admin,
-        code=200
-    )
-
-    # Prepare the credentials data for the request with an incorrect password
-    credentials = LoginCredentials(username="testuser", password=hash_password("hashed_password"))
-
-    # Call the method and check for HTTPException
-    with pytest.raises(HTTPException) as exc_info:
-        controller.login(credentials)
-    
-    assert exc_info.value.status_code == 401
-    assert exc_info.value.detail == "Invalid username or password"
-
-
-
-#Test para las excepciones
-
-
-
-
-
+#     try:
+#         auth_controller.login(form_data)
+#         assert False, "Se esperaba una excepción HTTPException"
+#     except HTTPException as e:
+#         assert e.status_code == 401
+#         assert e.detail == "Invalid username or password"

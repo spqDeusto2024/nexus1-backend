@@ -1,9 +1,6 @@
 import app.models.models as models
 from app.models.response_models import ResponseModel
 import app.mysql.models as mysql_models
-from app.mysql.mysql import Nexus1DataBase
-
-import app.utils.vars as var
 from sqlalchemy.orm import Session
 
 class Tenant_Controller:
@@ -11,23 +8,20 @@ class Tenant_Controller:
     Controller for managing tenant-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of tenants in the database.
-
-    
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
-        Initializes a new instance of the Tenant_Controller class.
+        Initializes a new instance of the Tenant_Controller class with a database connection.
 
-        This constructor does not take any parameters and does not perform any operation.
+        Parameters:
+            db (object): An instance of a database (e.g., Nexus1DataBase) that will be used to create the database connection.
         """
-        pass
-    
+        self.db = db  # Ya se pasa directamente la instancia de la base de datos
+
     def healthz(self):
         """
         Checks the status of the connection.
-
-        This method returns a "ok" status message indicating that the API is working correctly.
 
         Returns:
             dict: A dictionary with the status "ok".
@@ -38,9 +32,6 @@ class Tenant_Controller:
         """
         Creates a new tenant in the database.
 
-        This method takes a TenantCreate object, which contains the necessary data to create a tenant
-        and saves it to the database.
-
         Parameters:
             body (models.TenantCreate): An object containing the tenant data to create.
 
@@ -49,17 +40,15 @@ class Tenant_Controller:
         """
         try:
             body_row = mysql_models.Tenant(
-                id_role = body.id_role,
-                id_dormitory = body.id_dormitory,
-                name = body.name,
-                surname = body.surname, 
-                age = body.age,
-                status = body.status,
-                genre = body.genre
-                
+                id_role=body.id_role,
+                id_dormitory=body.id_dormitory,
+                name=body.name,
+                surname=body.surname,
+                age=body.age,
+                status=body.status,
+                genre=body.genre
             )
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 session.add(body_row)
                 session.commit()
                 session.close()
@@ -70,7 +59,7 @@ class Tenant_Controller:
                 code=201
             )
         except Exception as e:
-            print("Error inserting tenant into database")
+            print("Error inserting tenant into database:", e)
             return ResponseModel(
                 status="error",
                 message=str(e),
@@ -82,15 +71,12 @@ class Tenant_Controller:
         """
         Retrieves all tenants from the database.
 
-        This method queries all tenant records in the database and returns them.
-
         Returns:
             ResponseModel: A response model with the status of the operation, message, and tenant data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 response = session.query(mysql_models.Tenant).all()
                 session.close()
             return ResponseModel(
@@ -100,7 +86,7 @@ class Tenant_Controller:
                 code=201
             )
         except Exception as e:
-            print("Error retrieving tenants from database")
+            print("Error retrieving tenants from database:", e)
             return ResponseModel(
                 status="error",
                 message=str(e),
@@ -112,8 +98,6 @@ class Tenant_Controller:
         """
         Deletes a tenant from the database.
 
-        This method takes a TenantDelete object, which contains the ID of the tenant to delete.
-
         Parameters:
             body (models.TenantDelete): An object containing the tenant ID to delete.
 
@@ -121,20 +105,27 @@ class Tenant_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted tenant data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 tenant_deleted = session.query(mysql_models.Tenant).get(body.id)
-                session.delete(tenant_deleted)
-                session.commit()
-                session.close()
-            return ResponseModel(
-                status="ok",
-                message="Tenant successfully deleted",
-                data=tenant_deleted,
-                code=201
-            )
+                if tenant_deleted:
+                    session.delete(tenant_deleted)
+                    session.commit()
+                    session.close()
+                    return ResponseModel(
+                        status="ok",
+                        message="Tenant successfully deleted",
+                        data=tenant_deleted,
+                        code=201
+                    )
+                else:
+                    return ResponseModel(
+                        status="error",
+                        message="Tenant not found",
+                        data=None,
+                        code=404
+                    )
         except Exception as e:
-            print("Error deleting tenant from database")
+            print("Error deleting tenant from database:", e)
             return ResponseModel(
                 status="error",
                 message=str(e),
@@ -146,9 +137,6 @@ class Tenant_Controller:
         """
         Updates an existing tenant in the database.
 
-        This method takes a TenantUpdate object, which contains the updated data for the tenant,
-        and updates the corresponding record in the database.
-
         Parameters:
             body (models.TenantUpdate): An object containing the updated tenant data.
 
@@ -156,30 +144,35 @@ class Tenant_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated tenant data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
-                tenant:mysql_models.Tenant = session.query(mysql_models.Tenant).get(body.id)
-                tenant.name = body.name
-                tenant.surname = body.surname
-                tenant.age = body.age
-                tenant.status= body.status
-                tenant.genre = body.genre
-                
-                session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
-                session.commit()
-                session.close()
-            return ResponseModel(
-                status="ok",
-                message="Tenant successfully updated",
-                data=tenant,
-                code=201
-            )
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
+                tenant = session.query(mysql_models.Tenant).get(body.id)
+                if tenant:
+                    tenant.name = body.name
+                    tenant.surname = body.surname
+                    tenant.age = body.age
+                    tenant.status = body.status
+                    tenant.genre = body.genre
+
+                    session.commit()
+                    session.close()
+                    return ResponseModel(
+                        status="ok",
+                        message="Tenant successfully updated",
+                        data=tenant,
+                        code=201
+                    )
+                else:
+                    return ResponseModel(
+                        status="error",
+                        message="Tenant not found",
+                        data=None,
+                        code=404
+                    )
         except Exception as e:
-            print("Error updating tenant in database")
+            print("Error updating tenant in database:", e)
             return ResponseModel(
                 status="error",
                 message=str(e),
                 data=None,
                 code=500
             )
-

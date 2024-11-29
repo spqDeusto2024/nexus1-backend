@@ -1,248 +1,143 @@
 import pytest
-from unittest.mock import patch, MagicMock
-from app.controllers.dormitory_handler import Dormitory_Controller
-from app.models.models import DormitoryCreate, DormitoryDelete, DormitoryUpdate
-from app.models.response_models import ResponseModel
+from sqlalchemy.orm import Session
 from datetime import datetime
-
-@pytest.fixture
-def controller():
-    """Fixture to initialize the controller."""
-    return Dormitory_Controller()
-
-
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.healthz', return_value={"status": "ok"})
-def test_healthz(mock_healthz, controller):
-    """Test for the healthz method."""
-    response = controller.healthz()
-    assert response == {"status": "ok"}
+from app.models.models import *  # Tus modelos Pydantic
+from app.controllers.dormitory_handler import Dormitory_Controller
+from app.controllers.shelter_handler import Shelter_Controller
+from mysql import TestDataBase  # Tu clase para la base de datos
+import app.mysql.models as mysql_models  # El modelo SQLAlchemy de Dormitory
+import app.utils.vars as var
 
 
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.create_dormitory')
-def test_create_dormitory(mock_create, controller):
-    """Test for the create_dormitory method."""
-    # Simula la respuesta de create_dormitory
-    mock_response = ResponseModel(
-        status="ok",
-        message="Dormitory inserted into database successfully",
-        data=None,
-        code=201
-    )
-    mock_create.return_value = mock_response  # Aquí usamos el objeto real de ResponseModel.
+@pytest.fixture(scope="module")
+def db_session():
+    """
+    Fixture que crea una sesión de base de datos para las pruebas.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    session = db.get_session()
+    yield session
+    session.close()
 
-    # Llama al método con datos de prueba
-    body = DormitoryCreate(
-        id_shelter=1,
-        name="Dormitory A",
-        description="First dormitory",
-        capacity=100,
-        actual_tenant_number=50,
+
+
+def test_healthz():
+    """
+    Test para verificar el estado del controlador.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    controller = Dormitory_Controller(db)
+    result = controller.healthz()
+    assert result == {"status": "ok"}
+
+
+def test_create_dormitory(db_session):
+    """
+    Test para crear un nuevo dormitorio.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    controller = Dormitory_Controller(db)
+    shelter_controller = Shelter_Controller(db)
+    shelter_data = ShelterCreate(name = "shelter",description = "shelter for dormitory",created_at = datetime.now())
+    shelter_response = shelter_controller.create_shelter(shelter_data)
+
+    dormitory_data = DormitoryCreate(
+        id_shelter=shelter_response.data.id,
+        name="New Dormitory",
+        description="A new dormitory",
+        capacity=20,
+        actual_tenant_number=5,
         availability=True,
-        created_at=datetime.now()
+        created_at = datetime.now()
     )
-    response = controller.create_dormitory(body)
 
-    # Assertions para verificar que la respuesta es correcta
+    try:
+        response = controller.create_dormitory(dormitory_data)
+    except Exception as e:
+        raise e
+    
+    print(response.message)
+
     assert response.status == "ok"
-    assert response.message == "Dormitory inserted into database successfully"
-    assert response.data is None
     assert response.code == 201
+    assert response.message == "Dormitory inserted into database successfully"
 
 
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.get_all')
-def test_get_all(mock_get_all, controller):
-    """Test for the get_all method."""
-    # Mock the response of get_all
 
-    mock_dormitories = [
-        MagicMock(name="Dormitory A", id_shelter=1, capacity=100),
-        MagicMock(name="Dormitory B", id_shelter=2, capacity=200),
-    ]
 
-    mock_response = ResponseModel(
-        status="ok",
-        message="All dormitories successfully retrieved",
-        data=mock_dormitories,
-        code=201
-    )
-    
-    mock_get_all.return_value = mock_response
+def test_get_all_dormitories(db_session):
+    """
+    Test para obtener todos los dormitorios.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    controller = Dormitory_Controller(db)
     response = controller.get_all()
-    
-    # Assertions
+
     assert response.status == "ok"
-    assert response.message == "All dormitories successfully retrieved"
-    assert len(response.data) == 2
+    assert isinstance(response.data, list)
+    assert len(response.data) > 0
 
 
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.delete_dormitory')
-def test_delete_dormitory(mock_delete, controller):
-    """Test for the delete_dormitory method."""
-    
-    # Mock the response of delete_dormitory
-    mock_response = ResponseModel(
-        status="ok",
-        message="Dormitory successfully deleted",
-        data=None,
-        code=200
+def test_update_dormitory(db_session):
+    """
+    Test para actualizar un dormitorio existente.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    controller = Dormitory_Controller(db)
+    shelter_controller = Shelter_Controller(db)
+    shelter_data = ShelterCreate(name = "shelter_update",description = "shelter for dormitory_update",created_at = datetime.now())
+    shelter_response = shelter_controller.create_shelter(shelter_data)
+    dormitory_data = DormitoryCreate(
+        id_shelter=shelter_response.data.id,
+        name="Dormitory to Update",
+        description="Old description",
+        capacity=20,
+        actual_tenant_number=5,
+        availability=True,
+        created_at = datetime.now()
     )
-    mock_delete.return_value = mock_response
-    
-    # Prepare the body for the delete request
-    body = DormitoryDelete(id=1)
-    
-    # Call the method
-    response = controller.delete_dormitory(body)
+    create_response = controller.create_dormitory(dormitory_data)
 
-    # Assertions
-    assert response.status == "ok"
-    assert response.message == "Dormitory successfully deleted"
-
-
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.update_dormitory')
-def test_update_dormitory(mock_update, controller):
-    """Test for the update_dormitory method."""
-    
-    # Mock the response of update_dormitory
-    mock_response = ResponseModel(
-        status="ok",
-        message="Dormitory successfully updated",
-        data=None,
-        code=200
-    )
-    mock_update.return_value = mock_response
-    
-    # Prepare the body for the update request
-    body = DormitoryUpdate(
-        id=1,
-        id_shelter = 1,
+    updated_data = DormitoryUpdate(
+        id=create_response.data.id,
+        id_shelter = shelter_response.data.id,
         name="Updated Dormitory",
-        description="Updated description",
-        capacity=150,
-        actual_tenant_number=75,
-        availability=False,
-        created_at=datetime.now()
+        description="New description",
+        capacity=25,
+        actual_tenant_number=10,
+        availability=False
     )
-    
-    # Call the method
-    response = controller.update_dormitory(body)
+    response = controller.update_dormitory(updated_data)
 
-    # Assertions
     assert response.status == "ok"
     assert response.message == "Dormitory successfully updated"
 
+   
 
 
-
-
-#Test para excepciones
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.create_dormitory')
-def test_create_dormitory_database_error(mock_create, controller):
-    """Test for create_dormitory handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Database connection failed",
-        data=None,
-        code=500
-    )
-    mock_create.return_value = mock_response
-
-    # Prepara datos de prueba
-    body = DormitoryCreate(
-        id_shelter=1,
-        name="Dormitory A",
-        description="First dormitory",
-        capacity=100,
-        actual_tenant_number=50,
+def test_delete_dormitory(db_session):
+    """
+    Test para eliminar un dormitorio.
+    """
+    db = TestDataBase("mysql://test:test@test-database:3306/test")  # Ajusta esto según tu configuración
+    controller = Dormitory_Controller(db)
+    shelter_controller = Shelter_Controller(db)
+    shelter_data = ShelterCreate(name = "shelter_delete",description = "shelter for dormitory_delete",created_at = datetime.now())
+    shelter_response = shelter_controller.create_shelter(shelter_data)
+    dormitory_data = DormitoryCreate(
+        id_shelter=shelter_response.data.id,
+        name="Dormitory to Delete",
+        description="Will be deleted",
+        capacity=10,
+        actual_tenant_number=2,
         availability=True,
-        created_at=datetime.now()
+        created_at = datetime.now()
     )
+    create_response = controller.create_dormitory(dormitory_data)
 
-    # Llama al método
-    response = controller.create_dormitory(body)
+    delete_data = DormitoryDelete(id=create_response.data.id)
+    response = controller.delete_dormitory(delete_data)
 
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Database connection failed"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.get_all')
-def test_get_all_database_error(mock_get_all, controller):
-    """Test for get_all handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to retrieve dormitories from database",
-        data=None,
-        code=500
-    )
-    mock_get_all.return_value = mock_response
-
-    # Llama al método
-    response = controller.get_all()
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to retrieve dormitories from database"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.delete_dormitory')
-def test_delete_dormitory_database_error(mock_delete, controller):
-    """Test for delete_dormitory handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to delete dormitory from database",
-        data=None,
-        code=500
-    )
-    mock_delete.return_value = mock_response
-
-    # Prepara el body para la solicitud de eliminación
-    body = DormitoryDelete(id=999)  # Un ID inexistente
-
-    # Llama al método
-    response = controller.delete_dormitory(body)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to delete dormitory from database"
-    assert response.data is None
-    assert response.code == 500
-
-@patch('app.controllers.dormitory_handler.Dormitory_Controller.update_dormitory')
-def test_update_dormitory_database_error(mock_update, controller):
-    """Test for update_dormitory handling a database error."""
-    # Simula una respuesta de error
-    mock_response = ResponseModel(
-        status="error",
-        message="Failed to update dormitory in database",
-        data=None,
-        code=500
-    )
-    mock_update.return_value = mock_response
-
-    # Prepara datos de prueba
-    body = DormitoryUpdate(
-        id=999,  # Un ID inexistente
-        id_shelter=1,
-        name="Updated Dormitory",
-        description="Updated description",
-        capacity=150,
-        actual_tenant_number=75,
-        availability=False,
-        created_at=datetime.now()
-    )
-
-    # Llama al método
-    response = controller.update_dormitory(body)
-
-    # Validaciones
-    assert response.status == "error"
-    assert response.message == "Failed to update dormitory in database"
-    assert response.data is None
-    assert response.code == 500
+    assert response.status == "ok"
+    assert response.message == "Dormitory successfully deleted"
 

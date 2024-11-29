@@ -1,7 +1,7 @@
 import app.models.models as models
 from app.models.response_models import ResponseModel
 import app.mysql.models as mysql_models
-from app.mysql.mysql import Nexus1DataBase
+# from app.mysql.mysql import Nexus1DataBase, TestDataBase
 
 import app.utils.vars as var
 from sqlalchemy.orm import Session
@@ -12,23 +12,20 @@ class Shelter_Controller:
     Controller for managing shelter-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of shelters in the database.
-
-  
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Shelter_Controller class.
 
-        This constructor does not take any parameters and does not perform any operation.
+        Parameters:
+            db (object): An instance of a database (e.g., Nexus1DataBase or TestDataBase) that will be used to create the database connection.
         """
-        pass
-    
+        self.db = db  # Ya se pasa directamente la instancia de la base de datos
+
     def healthz(self):
         """
         Checks the status of the connection.
-
-        This method returns a "ok" status message indicating that the API is working correctly.
 
         Returns:
             dict: A dictionary with the status "ok".
@@ -39,9 +36,6 @@ class Shelter_Controller:
         """
         Creates a new shelter in the database.
 
-        This method takes a ShelterCreate object, which contains the necessary data to create a shelter
-        and saves it to the database.
-
         Parameters:
             body (models.ShelterCreate): An object containing the shelter data to create.
 
@@ -50,15 +44,15 @@ class Shelter_Controller:
         """
         try:
             body_row = mysql_models.Shelter(name=body.name, description=body.description)
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 session.add(body_row)
                 session.commit()
+                session.refresh(body_row)
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Shelter inserted into database successfully",
-                data=None,
+                data=body_row,
                 code=201
             )
         except Exception as e:
@@ -74,15 +68,12 @@ class Shelter_Controller:
         """
         Retrieves all shelters from the database.
 
-        This method queries all shelter records in the database and returns them.
-
         Returns:
             ResponseModel: A response model with the status of the operation, message, and shelter data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 response = session.query(mysql_models.Shelter).all()
                 session.close()
             return ResponseModel(
@@ -104,8 +95,6 @@ class Shelter_Controller:
         """
         Deletes a shelter from the database.
 
-        This method takes a ShelterDelete object, which contains the ID of the shelter to delete.
-
         Parameters:
             body (models.ShelterDelete): An object containing the shelter ID to delete.
 
@@ -113,8 +102,7 @@ class Shelter_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted shelter data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 shelter_deleted = session.query(mysql_models.Shelter).get(body.id)
                 session.delete(shelter_deleted)
                 session.commit()
@@ -138,9 +126,6 @@ class Shelter_Controller:
         """
         Updates an existing shelter in the database.
 
-        This method takes a ShelterUpdate object, which contains the updated data for the shelter,
-        and updates the corresponding record in the database.
-
         Parameters:
             body (models.ShelterUpdate): An object containing the updated shelter data.
 
@@ -148,12 +133,11 @@ class Shelter_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated shelter data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:  # Usamos self.db directamente
                 shelter: mysql_models.Shelter = session.query(mysql_models.Shelter).get(body.id)
                 shelter.name = body.name
                 shelter.description = body.description
-                session.dirty  # This seems redundant; the session will be dirty when an attribute is modified
+                session.dirty  # La sesión se marca como sucia automáticamente
                 session.commit()
                 session.close()
             return ResponseModel(

@@ -1,9 +1,8 @@
-version: '3.5'
+version: '3.8'
 
 networks:
   test:
     name: nexus1-backend-project
-
 
 services:
   mysql_db:
@@ -25,7 +24,7 @@ services:
       start_period: 5s
       interval: 5s
       timeout: 5s
-      retries: 55
+      retries: 5
 
   fastapi:
     image: nexus1-backend:latest
@@ -42,22 +41,39 @@ services:
     depends_on:
       mysql_db:
         condition: service_healthy
-    x-develop:
-      watch:
-        - action: sync
-          path: ./app
-          target: /code/app
-        - action: rebuild
-          path: ./app/package.json
-  db:
+
+  test_db:
     image: mysql:8.0.31
-    container_name: "Test_Database"
-    volumes:
-      - ./test :/code/test
+    container_name: test-database
+    networks:
+      - test
     environment:
-      MYSQL_ROOT_PASSWORD: test
-      MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
     ports:
-      - "3308:3308"
+      - 3308:3306  # Cambiar puerto para la base de datos de pruebas
+    volumes:
+      - ./test_db_data:/var/lib/mysql  # Persistir datos para la base de datos de prueba
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # test_container:
+  #   image: test_database:latest
+  #   container_name: test-runner
+  #   networks:
+  #     - test
+  #   environment:
+  #     - TEST_DATABASE_URL=mysql://test:test@test-database:3306/test  # URL de la base de datos de pruebas
+  #   volumes:
+  #     - ./test:/code/test  # Montar los tests en el contenedor
+  #   # - ./requirements.txt:/code/requirements.txt  # Pasar los requisitos de Python
+  #   # depends_on:
+  #   #   test_db:
+  #   #     condition: service_healthy
+  #   # command: ["python3", "-m", "unittest", "discover", "-s", "/code/test"]

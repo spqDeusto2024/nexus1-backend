@@ -12,17 +12,18 @@ class Role_Controller:
     Controller for managing Role-related operations.
 
     This class handles the creation, updating, deletion, and retrieval of roles in the database.
-
-   
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: object) -> None:
         """
         Initializes a new instance of the Role_Controller class.
 
-        This constructor does not take any parameters and does not perform any operation.
+        This constructor takes an instance of the database connection (e.g., Nexus1DataBase) from outside.
+
+        Parameters:
+            db (object): An instance of a database connection (e.g., Nexus1DataBase).
         """
-        pass
+        self.db = db  # Recibe la instancia de la base de datos desde fuera
     
     def healthz(self):
         """
@@ -50,8 +51,7 @@ class Role_Controller:
         """
         try:
             body_row = mysql_models.Role(name=body.name, description=body.description, id=body.id_room_relationship)
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 session.add(body_row)
                 session.commit()
                 session.close()
@@ -80,9 +80,8 @@ class Role_Controller:
             ResponseModel: A response model with the status of the operation, message, and Role data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
             response: list = []
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 response = session.query(mysql_models.Role).all()
                 session.close()
             return ResponseModel(
@@ -113,8 +112,7 @@ class Role_Controller:
             ResponseModel: A response model with the status of the operation, message, and deleted Role data.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 role_deleted = session.query(mysql_models.Role).get(body.id)
                 session.delete(role_deleted)
                 session.commit()
@@ -148,8 +146,7 @@ class Role_Controller:
             ResponseModel: A response model with the status of the operation, message, and updated  Role.
         """
         try:
-            db = Nexus1DataBase(var.MYSQL_URL)
-            with Session(db.engine) as session:
+            with Session(self.db.engine) as session:
                 Role: mysql_models.Role = session.query(mysql_models.Role).get(body.id)
                 Role.name = body.name
                 Role.description = body.description

@@ -1,8 +1,10 @@
 import sqlalchemy as db
-from base import Base
+# from base import Base
 from app.mysql.models import *
+from app.mysql.base import Base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import inspect
+from sqlalchemy.orm import declarative_base
 
 
 
@@ -14,9 +16,14 @@ class TestDataBase():
         attribute1 (engine): sqlalchemy imported module to manage remote database.
     """
     def __init__(self, url: str) -> None:
-        engine = db.create_engine(url)
-        self.engine = engine
-        pass
+        try:
+            engine = db.create_engine(url)
+            self.engine = engine
+            self.Session = sessionmaker(bind=self.engine)
+            pass
+        except Exception as e:
+            raise e
+        print("Init realizado correctamente")
     
   
 
@@ -33,10 +40,23 @@ class TestDataBase():
         Returns:
             None
         """
-        inspector = inspect(self.engine)
-        if "administrators" not in inspector.get_table_names():
+        try:
+            inspector = inspect(self.engine)
+            # Drop all existing tables
+            Base.metadata.drop_all(self.engine)
+            print("Dropped all existing tables.")
+
+            # Create all tables
             Base.metadata.create_all(self.engine)
-        else:
-            print("Tables already exists")
-        return
+            print("Created tables on the database.")
+        
+            return
+        except Exception as e:
+            raise e
+    def get_session(self):
+        """
+        Method to get database connection session
+        """
+        return self.Session()
+        
 
