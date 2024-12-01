@@ -57,11 +57,12 @@ class Relationship_Controller:
             with Session(self.db.engine) as session:
                 session.add(body_row)
                 session.commit()
+                session.refresh(body_row)
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Relationship inserted into database successfully",
-                data=None,
+                data=body_row,
                 code=201
             )
         except Exception as e:

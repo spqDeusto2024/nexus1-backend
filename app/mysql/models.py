@@ -230,7 +230,7 @@ class TenantRelationship(Base):
         id_relationship (int): The relationship type identifier (ForeignKey).
         created_at (DateTime): The timestamp when the tenant relationship was created.
     """
-   
+    
     __tablename__ = "tenant_relationships"
     id_tenant_relationship = Column(Integer, primary_key=True, autoincrement=True)
     id_tenant_1 = Column(Integer, ForeignKey("tenants.id"), nullable=False)

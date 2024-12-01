@@ -50,11 +50,12 @@ class Tenant_Relationship_Controller:
             with Session(self.db.engine) as session:  # Usamos self.db directamente
                 session.add(body_row)
                 session.commit()
+                session.refresh(body_row)
                 session.close()
             return ResponseModel(
                 status="ok",
                 message="Tenant_relationship inserted into database successfully",
-                data=None,
+                data=body_row,
                 code=201
             )
         except Exception as e:
