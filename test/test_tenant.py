@@ -36,7 +36,7 @@ def test_create_tenant(db_session):
 
     # Crear un shelter
     shelter_data = models.ShelterCreate(
-        name="Test Shelter",
+        name="Test Shelter_pwperpwer",
         description="Shelter for dormitory testing",
         created_at=datetime.now()
     )
@@ -58,7 +58,10 @@ def test_create_tenant(db_session):
         capacity=10,
         created_at=datetime.now()
     )
-    response_dormitory = dormitory_controller.create_dormitory(dormitory_data)
+    try:
+        response_dormitory = dormitory_controller.create_dormitory(dormitory_data)
+    except Exception as e:
+        raise e
 
     # Crear un tenant asociado al role y dormitory
     tenant_data = models.TenantCreate(

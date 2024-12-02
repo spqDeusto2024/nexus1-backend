@@ -55,6 +55,7 @@ class Room_Controller:
                 session.add(body_row)
                 session.commit()
                 session.refresh(body_row)
+                session.close()
             return ResponseModel(
                 status="ok",
                 message="Room inserted into database successfully",
@@ -155,6 +156,7 @@ class Room_Controller:
                     room.actual_tenant_number = body.actual_tenant_number
                     room.availability = body.availability
                     session.commit()
+                    session.refresh(room)   
                 else:
                     raise Exception("Room not found")
             return ResponseModel(
