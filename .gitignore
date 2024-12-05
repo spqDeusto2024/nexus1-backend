@@ -6,7 +6,7 @@ test_db_data/*
 mysql
     
 # Ignorar la carpeta build (archivos generados por Sphinx)
-build/
+docs/build/doctrees
 
 # Archivos temporales de Python
 __pycache__/

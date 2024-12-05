@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MySQL Module &#8212; Nexus1 development documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=249f3023"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utils Module" href="utils.html" />
+    <link rel="prev" title="Models Module" href="models.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="mysql-module">
+<h1>MySQL Module<a class="headerlink" href="#mysql-module" title="Link to this heading">¶</a></h1>
+<p>The <cite>mysql</cite> module is responsible for interacting with the MySQL database. It includes the configuration and models required for database operations, as well as helper functions for managing connections and queries.</p>
+<section id="files-in-the-mysql-module">
+<h2>Files in the <cite>mysql</cite> module:<a class="headerlink" href="#files-in-the-mysql-module" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><cite>base.py</cite>: Contains base functionality for database interactions.</p></li>
+<li><p><cite>models.py</cite>: Defines the MySQL database models.</p></li>
+<li><p><cite>mysql.py</cite>: Contains helper functions for managing MySQL connections and queries.</p></li>
+</ul>
+</section>
+<section id="description">
+<h2>Description:<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>This module is essential for the application to interact with MySQL. It includes base functionalities, the data models for the database schema, and helper functions for performing database operations. The <cite>models.py</cite> file provides the structure of the data in the database, while the <cite>mysql.py</cite> file contains logic for managing connections and queries.</p>
+<section id="base-functionality">
+<h3>Base Functionality<a class="headerlink" href="#base-functionality" title="Link to this heading">¶</a></h3>
+<p>The <cite>base.py</cite> file contains general helper functions for interacting with the MySQL database. It serves as a foundational component for other modules and files in the project that need to interact with MySQL.</p>
+<p>Since this file doesn’t contain docstrings, it is not auto-documented by Sphinx.</p>
+</section>
+<section id="module-app.mysql.models">
+<span id="mysql-models"></span><h3>MySQL Models<a class="headerlink" href="#module-app.mysql.models" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Administrator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Administrator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Administrator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents an administrator in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Administrator.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Administrator.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the administrator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Administrator.username">
+<span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#app.mysql.models.Administrator.username" title="Link to this definition">¶</a></dt>
+<dd><p>The username of the administrator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Administrator.password">
+<span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#app.mysql.models.Administrator.password" title="Link to this definition">¶</a></dt>
+<dd><p>The password for the administrator account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Administrator.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Administrator.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the administrator account was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Dormitory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Dormitory" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a dormitory in the shelter system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.id_shelter">
+<span class="sig-name descname"><span class="pre">id_shelter</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.id_shelter" title="Link to this definition">¶</a></dt>
+<dd><p>The shelter identifier the dormitory belongs to (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.description" title="Link to this definition">¶</a></dt>
+<dd><p>The description of the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.capacity" title="Link to this definition">¶</a></dt>
+<dd><p>The capacity of the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.actual_tenant_number">
+<span class="sig-name descname"><span class="pre">actual_tenant_number</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.actual_tenant_number" title="Link to this definition">¶</a></dt>
+<dd><p>The current number of tenants in the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.availability">
+<span class="sig-name descname"><span class="pre">availability</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.availability" title="Link to this definition">¶</a></dt>
+<dd><p>The availability status of the dormitory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Dormitory.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the dormitory record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.shelter">
+<span class="sig-name descname"><span class="pre">shelter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Shelter'</span></em><a class="headerlink" href="#app.mysql.models.Dormitory.shelter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Dormitory.tenants">
+<span class="sig-name descname"><span class="pre">tenants</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Tenant'</span></em><a class="headerlink" href="#app.mysql.models.Dormitory.tenants" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Parameter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a parameter in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Parameter.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Parameter.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Parameter.description" title="Link to this definition">¶</a></dt>
+<dd><p>A description of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Parameter.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the parameter record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.parameter_rooms">
+<span class="sig-name descname"><span class="pre">parameter_rooms</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ParameterRoom'</span></em><a class="headerlink" href="#app.mysql.models.Parameter.parameter_rooms" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">ParameterRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.ParameterRoom" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents the relationship between a room and a parameter in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the parameter relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.id_room">
+<span class="sig-name descname"><span class="pre">id_room</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.id_room" title="Link to this definition">¶</a></dt>
+<dd><p>The room identifier associated with this parameter (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.id_parameter">
+<span class="sig-name descname"><span class="pre">id_parameter</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.id_parameter" title="Link to this definition">¶</a></dt>
+<dd><p>The parameter identifier associated with this room (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.date">
+<span class="sig-name descname"><span class="pre">date</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.date" title="Link to this definition">¶</a></dt>
+<dd><p>The date the parameter value was recorded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.value" title="Link to this definition">¶</a></dt>
+<dd><p>The value of the parameter for the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.ParameterRoom.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the parameter value was recorded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.parameter">
+<span class="sig-name descname"><span class="pre">parameter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Parameter'</span></em><a class="headerlink" href="#app.mysql.models.ParameterRoom.parameter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.ParameterRoom.room">
+<span class="sig-name descname"><span class="pre">room</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room'</span></em><a class="headerlink" href="#app.mysql.models.ParameterRoom.room" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Relationship">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a relationship between tenants in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Relationship.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Relationship.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Relationship.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Relationship.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Relationship.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Relationship.description" title="Link to this definition">¶</a></dt>
+<dd><p>A description of the relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Relationship.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Relationship.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the relationship record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Role">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Role" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a role in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Role.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Role.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Role.description" title="Link to this definition">¶</a></dt>
+<dd><p>A description of the role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.id_room_relationship">
+<span class="sig-name descname"><span class="pre">id_room_relationship</span></span><a class="headerlink" href="#app.mysql.models.Role.id_room_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>The room identifier associated with this role (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Role.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the role record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.room_relationship">
+<span class="sig-name descname"><span class="pre">room_relationship</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room'</span></em><a class="headerlink" href="#app.mysql.models.Role.room_relationship" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Role.tenants">
+<span class="sig-name descname"><span class="pre">tenants</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Tenant'</span></em><a class="headerlink" href="#app.mysql.models.Role.tenants" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Room">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Room" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a room in the shelter system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Room.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.id_shelter">
+<span class="sig-name descname"><span class="pre">id_shelter</span></span><a class="headerlink" href="#app.mysql.models.Room.id_shelter" title="Link to this definition">¶</a></dt>
+<dd><p>The shelter identifier the room belongs to (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Room.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Room.description" title="Link to this definition">¶</a></dt>
+<dd><p>The description of the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><a class="headerlink" href="#app.mysql.models.Room.capacity" title="Link to this definition">¶</a></dt>
+<dd><p>The capacity of the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.actual_tenant_number">
+<span class="sig-name descname"><span class="pre">actual_tenant_number</span></span><a class="headerlink" href="#app.mysql.models.Room.actual_tenant_number" title="Link to this definition">¶</a></dt>
+<dd><p>The current number of tenants in the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.availability">
+<span class="sig-name descname"><span class="pre">availability</span></span><a class="headerlink" href="#app.mysql.models.Room.availability" title="Link to this definition">¶</a></dt>
+<dd><p>The availability status of the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Room.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the room record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ParameterRoom'</span></em><a class="headerlink" href="#app.mysql.models.Room.parameters" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.roles">
+<span class="sig-name descname"><span class="pre">roles</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Role'</span></em><a class="headerlink" href="#app.mysql.models.Room.roles" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Room.shelter">
+<span class="sig-name descname"><span class="pre">shelter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Shelter'</span></em><a class="headerlink" href="#app.mysql.models.Room.shelter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Shelter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a shelter in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Shelter.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the shelter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Shelter.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the shelter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#app.mysql.models.Shelter.description" title="Link to this definition">¶</a></dt>
+<dd><p>The description of the shelter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Shelter.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the shelter record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.dormitories">
+<span class="sig-name descname"><span class="pre">dormitories</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Dormitory'</span></em><a class="headerlink" href="#app.mysql.models.Shelter.dormitories" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Shelter.rooms">
+<span class="sig-name descname"><span class="pre">rooms</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room'</span></em><a class="headerlink" href="#app.mysql.models.Shelter.rooms" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">Tenant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.Tenant" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a tenant in the system.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.mysql.models.Tenant.id" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the tenant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.id_role">
+<span class="sig-name descname"><span class="pre">id_role</span></span><a class="headerlink" href="#app.mysql.models.Tenant.id_role" title="Link to this definition">¶</a></dt>
+<dd><p>The role identifier of the tenant (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.id_dormitory">
+<span class="sig-name descname"><span class="pre">id_dormitory</span></span><a class="headerlink" href="#app.mysql.models.Tenant.id_dormitory" title="Link to this definition">¶</a></dt>
+<dd><p>The dormitory identifier where the tenant stays (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.mysql.models.Tenant.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the tenant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.surname">
+<span class="sig-name descname"><span class="pre">surname</span></span><a class="headerlink" href="#app.mysql.models.Tenant.surname" title="Link to this definition">¶</a></dt>
+<dd><p>The surname of the tenant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.age">
+<span class="sig-name descname"><span class="pre">age</span></span><a class="headerlink" href="#app.mysql.models.Tenant.age" title="Link to this definition">¶</a></dt>
+<dd><p>The age of the tenant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#app.mysql.models.Tenant.status" title="Link to this definition">¶</a></dt>
+<dd><p>The current status of the tenant (active/inactive).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.genre">
+<span class="sig-name descname"><span class="pre">genre</span></span><a class="headerlink" href="#app.mysql.models.Tenant.genre" title="Link to this definition">¶</a></dt>
+<dd><p>The genre of the tenant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Tenant.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the tenant record was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.dormitory">
+<span class="sig-name descname"><span class="pre">dormitory</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Dormitory'</span></em><a class="headerlink" href="#app.mysql.models.Tenant.dormitory" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Tenant.role">
+<span class="sig-name descname"><span class="pre">role</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Role'</span></em><a class="headerlink" href="#app.mysql.models.Tenant.role" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.models.</span></span><span class="sig-name descname"><span class="pre">TenantRelationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.models.TenantRelationship" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">declarative_base</span></code></p>
+<p>Represents a relationship between two tenants.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship.id_tenant_relationship">
+<span class="sig-name descname"><span class="pre">id_tenant_relationship</span></span><a class="headerlink" href="#app.mysql.models.TenantRelationship.id_tenant_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>The unique identifier of the tenant relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship.id_tenant_1">
+<span class="sig-name descname"><span class="pre">id_tenant_1</span></span><a class="headerlink" href="#app.mysql.models.TenantRelationship.id_tenant_1" title="Link to this definition">¶</a></dt>
+<dd><p>The first tenant involved in the relationship (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship.id_tenant_2">
+<span class="sig-name descname"><span class="pre">id_tenant_2</span></span><a class="headerlink" href="#app.mysql.models.TenantRelationship.id_tenant_2" title="Link to this definition">¶</a></dt>
+<dd><p>The second tenant involved in the relationship (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship.id_relationship">
+<span class="sig-name descname"><span class="pre">id_relationship</span></span><a class="headerlink" href="#app.mysql.models.TenantRelationship.id_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>The relationship type identifier (ForeignKey).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.TenantRelationship.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.TenantRelationship.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>The timestamp when the tenant relationship was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DateTime</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The <cite>models.py</cite> file defines the MySQL database models used by the application. These models represent the structure of tables in the MySQL database, and are used with an ORM to query and manipulate the database records.</p>
+</section>
+<section id="module-app.mysql.mysql">
+<span id="mysql-helper-functions"></span><h3>MySQL Helper Functions<a class="headerlink" href="#module-app.mysql.mysql" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.mysql.mysql.Nexus1DataBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.mysql.</span></span><span class="sig-name descname"><span class="pre">Nexus1DataBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.mysql.Nexus1DataBase" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class used for centralizng the database creation and preparing methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.mysql.Nexus1DataBase.attribute1">
+<span class="sig-name descname"><span class="pre">attribute1</span></span><a class="headerlink" href="#app.mysql.mysql.Nexus1DataBase.attribute1" title="Link to this definition">¶</a></dt>
+<dd><p>sqlalchemy imported module to manage remote database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>engine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.mysql.mysql.Nexus1DataBase.init_database">
+<span class="sig-name descname"><span class="pre">init_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.mysql.Nexus1DataBase.init_database" title="Link to this definition">¶</a></dt>
+<dd><p>This method is used to create the database.It checks wether if
+the table administrators is created,what it would mean that all tables had been created
+before,and if it does not exists,this function creates all tables on the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>url</em>) – URL for the location of the remote database.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The <cite>mysql.py</cite> file provides helper functions for managing MySQL database connections, executing queries, and handling database transactions. These functions help streamline the process of interacting with MySQL in the application.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Nexus1</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authentication Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controllers.html">Controllers Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints.html">Endpoints Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MySQL Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="models.html" title="previous chapter">Models Module</a></li>
+      <li>Next: <a href="utils.html" title="next chapter">Utils Module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Manuel Garcés,Josu Igoa,Iker Perez,Carlos Gonzalez..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/mysql.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

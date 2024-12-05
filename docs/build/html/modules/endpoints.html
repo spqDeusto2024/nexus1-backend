@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Endpoints Module &#8212; Nexus1 development documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=249f3023"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Models Module" href="models.html" />
+    <link rel="prev" title="Controllers Module" href="controllers.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="endpoints-module">
+<h1>Endpoints Module<a class="headerlink" href="#endpoints-module" title="Link to this heading">¶</a></h1>
+<p>The <cite>endpoints</cite> module contains various API endpoint files. These endpoints are responsible for handling different HTTP requests, interacting with the database, and returning appropriate responses. Each file corresponds to a resource or group of resources in the application.</p>
+<section id="files-in-the-endpoints-module">
+<h2>Files in the <cite>endpoints</cite> module:<a class="headerlink" href="#files-in-the-endpoints-module" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><cite>administrator.py</cite>: Contains the API endpoints for administrator-related actions.</p></li>
+<li><p><cite>auth.py</cite>: Handles authentication-related API endpoints, such as login and token management.</p></li>
+<li><p><cite>dormitory.py</cite>: Contains endpoints related to dormitory management.</p></li>
+<li><p><cite>parameter.py</cite>: Provides endpoints for managing parameters in the application.</p></li>
+<li><p><cite>parameterRoom.py</cite>: Includes endpoints related to room parameters.</p></li>
+<li><p><cite>relationship.py</cite>: Handles endpoints for managing relationships between entities.</p></li>
+<li><p><cite>role.py</cite>: Contains role management-related endpoints.</p></li>
+<li><p><cite>room.py</cite>: Includes endpoints for room management in the application.</p></li>
+<li><p><cite>shelter.py</cite>: Provides endpoints for managing shelters.</p></li>
+<li><p><cite>tenant.py</cite>: Handles endpoints for tenant management.</p></li>
+<li><p><cite>tenant_relationship.py</cite>: Contains endpoints related to tenant relationships.</p></li>
+</ul>
+</section>
+<section id="description">
+<h2>Description:<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>Each of these files defines endpoints for specific resources or functionalities, helping to manage data and interact with clients through HTTP requests.</p>
+<section id="administrator-endpoints">
+<h3>Administrator Endpoints<a class="headerlink" href="#administrator-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`administrator.py`</strong>: Manages administrator-related API requests such as creating, updating, and deleting administrators.</p></li>
+</ul>
+</section>
+<section id="authentication-endpoints">
+<h3>Authentication Endpoints<a class="headerlink" href="#authentication-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`auth.py`</strong>: Handles user authentication, including login and generating JWT tokens.</p></li>
+</ul>
+</section>
+<section id="dormitory-endpoints">
+<h3>Dormitory Endpoints<a class="headerlink" href="#dormitory-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`dormitory.py`</strong>: Manages dormitory-related actions such as creating, listing, and modifying dormitory data.</p></li>
+</ul>
+</section>
+<section id="parameter-endpoints">
+<h3>Parameter Endpoints<a class="headerlink" href="#parameter-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`parameter.py`</strong>: Provides endpoints to manage various application parameters.</p></li>
+</ul>
+</section>
+<section id="room-parameter-endpoints">
+<h3>Room Parameter Endpoints<a class="headerlink" href="#room-parameter-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`parameterRoom.py`</strong>: Handles endpoints for room-specific parameters, like configuration and settings.</p></li>
+</ul>
+</section>
+<section id="relationship-endpoints">
+<h3>Relationship Endpoints<a class="headerlink" href="#relationship-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`relationship.py`</strong>: Manages relationships between different entities in the system.</p></li>
+</ul>
+</section>
+<section id="role-endpoints">
+<h3>Role Endpoints<a class="headerlink" href="#role-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`role.py`</strong>: Contains endpoints for role management, such as assigning roles and querying role data.</p></li>
+</ul>
+</section>
+<section id="room-management-endpoints">
+<h3>Room Management Endpoints<a class="headerlink" href="#room-management-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`room.py`</strong>: Provides endpoints to create, modify, and view room data.</p></li>
+</ul>
+</section>
+<section id="shelter-endpoints">
+<h3>Shelter Endpoints<a class="headerlink" href="#shelter-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`shelter.py`</strong>: Handles shelter management, including shelter creation and modification.</p></li>
+</ul>
+</section>
+<section id="tenant-endpoints">
+<h3>Tenant Endpoints<a class="headerlink" href="#tenant-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`tenant.py`</strong>: Manages tenant data, including adding, updating, and removing tenants.</p></li>
+</ul>
+</section>
+<section id="tenant-relationship-endpoints">
+<h3>Tenant Relationship Endpoints<a class="headerlink" href="#tenant-relationship-endpoints" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>`tenant_relationship.py`</strong>: Contains endpoints for managing relationships between tenants and other entities.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Nexus1</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authentication Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controllers.html">Controllers Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Endpoints Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql.html">MySQL Integration Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="controllers.html" title="previous chapter">Controllers Module</a></li>
+      <li>Next: <a href="models.html" title="next chapter">Models Module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Manuel Garcés,Josu Igoa,Iker Perez,Carlos Gonzalez..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/endpoints.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -28,7 +28,7 @@ Módulo que aloja el backend, documentación y testing del proyecto (API y proce
 - **Test**: Contiene los tests de los controladores del proyecto.  
 
 - **Docs**: Alberga los ficheros de configuración y generación de documentación automática, junto con los resultados generados.  
-  - `Source`: Contiene los ficheros de configuración y creación de documentación automática.  
+  - `Build`: Contiene los ficheros de configuración y creación de documentación automática.  
   - `Docs`: Incluye los resultados de la documentación generada.
 
 - **Docker**: Contiene los ficheros de configuración para la creación de imágenes de Docker.

@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Controllers Module &#8212; Nexus1 development documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=cb25574f" />
+    <script src="../_static/documentation_options.js?v=249f3023"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Endpoints Module" href="endpoints.html" />
+    <link rel="prev" title="Authentication Module" href="auth.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="controllers-module">
+<h1>Controllers Module<a class="headerlink" href="#controllers-module" title="Link to this heading">¶</a></h1>
+<p>The <cite>controllers</cite> module contains the business logic for handling different resources in the application, such as tenants, rooms, roles, and more. Each controller file is responsible for a specific resource or group of resources.</p>
+<section id="files-in-the-controllers-module">
+<h2>Files in the <cite>controllers</cite> module:<a class="headerlink" href="#files-in-the-controllers-module" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><cite>administrator_handler.py</cite>: Handles requests related to administrators.</p></li>
+<li><p><cite>auth_handler.py</cite>: Handles authentication-related requests.</p></li>
+<li><p><cite>dormitory_handler.py</cite>: Handles requests for dormitory data.</p></li>
+<li><p><cite>parameter_handler.py</cite>: Handles requests for parameter data.</p></li>
+<li><p><cite>parameter_room_handler.py</cite>: Handles requests for parameter room data.</p></li>
+<li><p><cite>relationship_handler.py</cite>: Handles relationships between resources.</p></li>
+<li><p><cite>role_handler.py</cite>: Handles role-related requests.</p></li>
+<li><p><cite>room_handler.py</cite>: Handles room-related requests.</p></li>
+<li><p><cite>shelter_handler.py</cite>: Handles shelter-related requests.</p></li>
+<li><p><cite>tenant_handler.py</cite>: Handles tenant-related requests.</p></li>
+<li><p><cite>tenant_relationship_handler.py</cite>: Handles relationships between tenants and other resources.</p></li>
+</ul>
+</section>
+<section id="description">
+<h2>Description:<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>This module is responsible for mapping requests to functions that interact with the database and return the appropriate data to the user.</p>
+<section id="administrator-handler">
+<h3>Administrator Handler<a class="headerlink" href="#administrator-handler" title="Link to this heading">¶</a></h3>
+<dl class="py class" id="module-app.controllers.administrator_handler">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.administrator_handler.</span></span><span class="sig-name descname"><span class="pre">Administrator_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing administrator-related operations.</p>
+<p>This class handles the creation, updating, deletion, retrieval, and authentication of administrators in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.create_administrator">
+<span class="sig-name descname"><span class="pre">create_administrator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.AdministratorCreate" title="app.models.models.AdministratorCreate"><span class="pre">AdministratorCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.create_administrator" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new administrator in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.AdministratorCreate" title="app.models.models.AdministratorCreate"><em>models.AdministratorCreate</em></a>) – An object containing the administrator data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.delete_administrator">
+<span class="sig-name descname"><span class="pre">delete_administrator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.AdministratorDelete" title="app.models.models.AdministratorDelete"><span class="pre">AdministratorDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.delete_administrator" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes an administrator from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.AdministratorDelete" title="app.models.models.AdministratorDelete"><em>models.AdministratorDelete</em></a>) – An object containing the administrator ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted administrator data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.get_admin_by_username">
+<span class="sig-name descname"><span class="pre">get_admin_by_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.get_admin_by_username" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves an administrator by their username.</p>
+<p>This method queries the database for an administrator based on the provided username and returns the details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the administrator to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and administrator data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all administrators from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and administrator data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.administrator_handler.Administrator_Controller.update_administrator">
+<span class="sig-name descname"><span class="pre">update_administrator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.AdministratorUpdate" title="app.models.models.AdministratorUpdate"><span class="pre">AdministratorUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.administrator_handler.Administrator_Controller.update_administrator" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing administrator in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.AdministratorUpdate" title="app.models.models.AdministratorUpdate"><em>models.AdministratorUpdate</em></a>) – An object containing the updated administrator data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated administrator data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="authentication-handler">
+<h3>Authentication Handler<a class="headerlink" href="#authentication-handler" title="Link to this heading">¶</a></h3>
+<dl class="py class" id="module-app.controllers.auth_handler">
+<dt class="sig sig-object py" id="app.controllers.auth_handler.Auth_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.auth_handler.</span></span><span class="sig-name descname"><span class="pre">Auth_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.auth_handler.Auth_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A controller for handling authentication operations like login.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.controllers.auth_handler.Auth_Controller.db">
+<span class="sig-name descname"><span class="pre">db</span></span><a class="headerlink" href="#app.controllers.auth_handler.Auth_Controller.db" title="Link to this definition">¶</a></dt>
+<dd><p>An instance of a database (e.g., Nexus1DataBase) that will be used for database operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.auth_handler.Auth_Controller.login">
+<span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.OAuth2PasswordRequestForm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.auth_handler.Auth_Controller.login" title="Link to this definition">¶</a></dt>
+<dd><p>Authenticates a user by verifying their username and password.</p>
+<p>This method checks if the provided username exists in the database and
+if the password matches the stored (hashed) password. If successful,
+it generates and returns an access token for the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>form_data</strong> (<em>OAuth2PasswordRequestForm</em>) – The credentials provided by the user for login.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the access token and token type if authentication is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – If the credentials are invalid, an HTTP 401 Unauthorized exception is raised.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.dormitory_handler">
+<span id="dormitory-handler"></span><h3>Dormitory Handler<a class="headerlink" href="#module-app.controllers.dormitory_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.dormitory_handler.</span></span><span class="sig-name descname"><span class="pre">Dormitory_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing dormitory-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of dormitories in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller.create_dormitory">
+<span class="sig-name descname"><span class="pre">create_dormitory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.DormitoryCreate" title="app.models.models.DormitoryCreate"><span class="pre">DormitoryCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller.create_dormitory" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new dormitory in the database.</p>
+<p>This method takes a DormitoryCreate object, which contains the necessary data to create a dormitory
+and saves it to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.DormitoryCreate" title="app.models.models.DormitoryCreate"><em>models.DormitoryCreate</em></a>) – An object containing the dormitory data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller.delete_dormitory">
+<span class="sig-name descname"><span class="pre">delete_dormitory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.DormitoryDelete" title="app.models.models.DormitoryDelete"><span class="pre">DormitoryDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller.delete_dormitory" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a dormitory from the database.</p>
+<p>This method takes a DormitoryDelete object, which contains the ID of the dormitory to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.DormitoryDelete" title="app.models.models.DormitoryDelete"><em>models.DormitoryDelete</em></a>) – An object containing the dormitory ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted dormitory data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all dormitories from the database.</p>
+<p>This method queries all dormitory records in the database and returns them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and dormitory data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<p>This method returns a “ok” status message indicating that the API is working correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.dormitory_handler.Dormitory_Controller.update_dormitory">
+<span class="sig-name descname"><span class="pre">update_dormitory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.DormitoryUpdate" title="app.models.models.DormitoryUpdate"><span class="pre">DormitoryUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.dormitory_handler.Dormitory_Controller.update_dormitory" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing dormitory in the database.</p>
+<p>This method takes a DormitoryUpdate object, which contains the updated data for the dormitory,
+and updates the corresponding record in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.DormitoryUpdate" title="app.models.models.DormitoryUpdate"><em>models.DormitoryUpdate</em></a>) – An object containing the updated dormitory data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated dormitory data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.parameter_handler">
+<span id="parameter-handler"></span><h3>Parameter Handler<a class="headerlink" href="#module-app.controllers.parameter_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.parameter_handler.</span></span><span class="sig-name descname"><span class="pre">Parameter_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing Parameter-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of Parameters in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller.create_parameter">
+<span class="sig-name descname"><span class="pre">create_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterCreate" title="app.models.models.ParameterCreate"><span class="pre">ParameterCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller.create_parameter" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new Parameter in the database.</p>
+<p>This method takes a Parameter object, which contains the necessary data to create a Parameter
+and saves it to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ParameterCreate" title="app.models.models.ParameterCreate"><em>models.ParameterCreate</em></a>) – An object containing the parameter data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller.delete_parameter">
+<span class="sig-name descname"><span class="pre">delete_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterDelete" title="app.models.models.ParameterDelete"><span class="pre">ParameterDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller.delete_parameter" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a Parameter from the database.</p>
+<p>This method takes a Parameter object, which contains the ID of the Parameter to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ParameterDelete" title="app.models.models.ParameterDelete"><em>models.ParameterDelete</em></a>) – An object containing the parameter ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted parameter data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all Parameters from the database.</p>
+<p>This method queries all Parameters records in the database and returns them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and parameter data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<p>This method returns a “ok” status message indicating that the API is working correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_handler.Parameter_Controller.update_parameter">
+<span class="sig-name descname"><span class="pre">update_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterUpdate" title="app.models.models.ParameterUpdate"><span class="pre">ParameterUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_handler.Parameter_Controller.update_parameter" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing Parameter in the database.</p>
+<p>This method takes a Parameter object, which contains the updated data for the Parameter,
+and updates the corresponding record in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ParameterUpdate" title="app.models.models.ParameterUpdate"><em>models.ParameterUpdate</em></a>) – An object containing the updated parameter data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.parameter_room_handler">
+<span id="parameter-room-handler"></span><h3>Parameter Room Handler<a class="headerlink" href="#module-app.controllers.parameter_room_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.parameter_room_handler.</span></span><span class="sig-name descname"><span class="pre">ParameterRoom_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing ParameterRoom-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of ParameterRooms in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller.create_parameterRoom">
+<span class="sig-name descname"><span class="pre">create_parameterRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterRoomCreate" title="app.models.models.ParameterRoomCreate"><span class="pre">ParameterRoomCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller.create_parameterRoom" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new ParameterRoom in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="mysql.html#app.mysql.models.ParameterRoom" title="app.mysql.models.ParameterRoom"><em>models.ParameterRoom</em></a>) – An object containing the shelter data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller.delete_parameterRoom">
+<span class="sig-name descname"><span class="pre">delete_parameterRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterRoomDelete" title="app.models.models.ParameterRoomDelete"><span class="pre">ParameterRoomDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller.delete_parameterRoom" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a ParameterRoom from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ParameterRoomDelete" title="app.models.models.ParameterRoomDelete"><em>models.ParameterRoomDelete</em></a>) – An object containing the shelter ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted ParameterRoom data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all ParameterRooms from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and ParameterRoom data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.parameter_room_handler.ParameterRoom_Controller.update_parameterRoom">
+<span class="sig-name descname"><span class="pre">update_parameterRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ParameterRoomUpdate" title="app.models.models.ParameterRoomUpdate"><span class="pre">ParameterRoomUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.parameter_room_handler.ParameterRoom_Controller.update_parameterRoom" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing ParameterRoom in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ParameterRoomUpdate" title="app.models.models.ParameterRoomUpdate"><em>models.ParameterRoomUpdate</em></a>) – An object containing the updated ParameterRoom data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated ParameterRoom data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.relationship_handler">
+<span id="relationship-handler"></span><h3>Relationship Handler<a class="headerlink" href="#module-app.controllers.relationship_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.relationship_handler.</span></span><span class="sig-name descname"><span class="pre">Relationship_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing relationship-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of relationships in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller.create_relationship">
+<span class="sig-name descname"><span class="pre">create_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RelationshipCreate" title="app.models.models.RelationshipCreate"><span class="pre">RelationshipCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller.create_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new relationship in the database.</p>
+<p>This method takes a RelationshipCreate object, which contains the necessary data to create a relationship
+and saves it to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RelationshipCreate" title="app.models.models.RelationshipCreate"><em>models.RelationshipCreate</em></a>) – An object containing the relationship data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller.delete_relationship">
+<span class="sig-name descname"><span class="pre">delete_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RelationshipDelete" title="app.models.models.RelationshipDelete"><span class="pre">RelationshipDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller.delete_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a relationship from the database.</p>
+<p>This method takes a RelationshipDelete object, which contains the ID of the relationship to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RelationshipDelete" title="app.models.models.RelationshipDelete"><em>models.RelationshipDelete</em></a>) – An object containing the relationship ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted relationship data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all relationships from the database.</p>
+<p>This method queries all relationship records in the database and returns them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and relationship data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<p>This method returns a “ok” status message indicating that the API is working correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.relationship_handler.Relationship_Controller.update_relationship">
+<span class="sig-name descname"><span class="pre">update_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RelationshipUpdate" title="app.models.models.RelationshipUpdate"><span class="pre">RelationshipUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.relationship_handler.Relationship_Controller.update_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing relationship in the database.</p>
+<p>This method takes a RelationshipUpdate object, which contains the updated data for the relationship,
+and updates the corresponding record in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RelationshipUpdate" title="app.models.models.RelationshipUpdate"><em>models.RelationshipUpdate</em></a>) – An object containing the updated relationship data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated relationship data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.role_handler">
+<span id="role-handler"></span><h3>Role Handler<a class="headerlink" href="#module-app.controllers.role_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.role_handler.</span></span><span class="sig-name descname"><span class="pre">Role_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing Role-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of roles in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller.create_role">
+<span class="sig-name descname"><span class="pre">create_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoleCreate" title="app.models.models.RoleCreate"><span class="pre">RoleCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller.create_role" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new role in the database.</p>
+<p>This method takes a RoleCreate object, which contains the necessary data to create a role
+and saves it to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoleCreate" title="app.models.models.RoleCreate"><em>models.RoleCreate</em></a>) – An object containing the shelter data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller.delete_role">
+<span class="sig-name descname"><span class="pre">delete_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoleDelete" title="app.models.models.RoleDelete"><span class="pre">RoleDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller.delete_role" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a Role from the database.</p>
+<p>This method takes a RoleDelete object, which contains the ID of the Role to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoleDelete" title="app.models.models.RoleDelete"><em>models.RoleDelete</em></a>) – An object containing the shelter ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted Role data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all Roles from the database.</p>
+<p>This method queries all Roles records in the database and returns them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and Role data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<p>This method returns a “ok” status message indicating that the API is working correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.role_handler.Role_Controller.update_role">
+<span class="sig-name descname"><span class="pre">update_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoleUpdate" title="app.models.models.RoleUpdate"><span class="pre">RoleUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.role_handler.Role_Controller.update_role" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing Role in the database.</p>
+<p>This method takes a RoleUpdate object, which contains the updated data for the Role,
+and updates the corresponding record in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoleUpdate" title="app.models.models.RoleUpdate"><em>models.RoleUpdate</em></a>) – An object containing the updated Role data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated  Role.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.room_handler">
+<span id="room-handler"></span><h3>Room Handler<a class="headerlink" href="#module-app.controllers.room_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.room_handler.</span></span><span class="sig-name descname"><span class="pre">Room_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing Room-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of rooms in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller.create_room">
+<span class="sig-name descname"><span class="pre">create_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoomCreate" title="app.models.models.RoomCreate"><span class="pre">RoomCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller.create_room" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new room in the database.</p>
+<p>This method takes a RoomCreate object, which contains the necessary data to create a room
+and saves it to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoomCreate" title="app.models.models.RoomCreate"><em>models.RoomCreate</em></a>) – An object containing the room data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller.delete_room">
+<span class="sig-name descname"><span class="pre">delete_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoomDelete" title="app.models.models.RoomDelete"><span class="pre">RoomDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller.delete_room" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a room from the database.</p>
+<p>This method takes a RoomDelete object, which contains the ID of the room to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoomDelete" title="app.models.models.RoomDelete"><em>models.RoomDelete</em></a>) – An object containing the room ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted room data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all rooms from the database.</p>
+<p>This method queries all room records in the database and returns them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and rooms data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<p>This method returns a “ok” status message indicating that the API is working correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_handler.Room_Controller.update_room">
+<span class="sig-name descname"><span class="pre">update_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.RoomUpdate" title="app.models.models.RoomUpdate"><span class="pre">RoomUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_handler.Room_Controller.update_room" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing room in the database.</p>
+<p>This method takes a RoomUpdate object, which contains the updated data for the room,
+and updates the corresponding record in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.RoomUpdate" title="app.models.models.RoomUpdate"><em>models.RoomUpdate</em></a>) – An object containing the updated room data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated room data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.shelter_handler">
+<span id="shelter-handler"></span><h3>Shelter Handler<a class="headerlink" href="#module-app.controllers.shelter_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.shelter_handler.</span></span><span class="sig-name descname"><span class="pre">Shelter_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing shelter-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of shelters in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller.create_shelter">
+<span class="sig-name descname"><span class="pre">create_shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ShelterCreate" title="app.models.models.ShelterCreate"><span class="pre">ShelterCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller.create_shelter" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new shelter in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ShelterCreate" title="app.models.models.ShelterCreate"><em>models.ShelterCreate</em></a>) – An object containing the shelter data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller.delete_shelter">
+<span class="sig-name descname"><span class="pre">delete_shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ShelterDelete" title="app.models.models.ShelterDelete"><span class="pre">ShelterDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller.delete_shelter" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a shelter from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ShelterDelete" title="app.models.models.ShelterDelete"><em>models.ShelterDelete</em></a>) – An object containing the shelter ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted shelter data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all shelters from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and shelter data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_handler.Shelter_Controller.update_shelter">
+<span class="sig-name descname"><span class="pre">update_shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.ShelterUpdate" title="app.models.models.ShelterUpdate"><span class="pre">ShelterUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_handler.Shelter_Controller.update_shelter" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing shelter in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.ShelterUpdate" title="app.models.models.ShelterUpdate"><em>models.ShelterUpdate</em></a>) – An object containing the updated shelter data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated shelter data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.tenant_handler">
+<span id="tenant-handler"></span><h3>Tenant Handler<a class="headerlink" href="#module-app.controllers.tenant_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.tenant_handler.</span></span><span class="sig-name descname"><span class="pre">Tenant_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing tenant-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of tenants in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller.create_tenant">
+<span class="sig-name descname"><span class="pre">create_tenant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantCreate" title="app.models.models.TenantCreate"><span class="pre">TenantCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller.create_tenant" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new tenant in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.TenantCreate" title="app.models.models.TenantCreate"><em>models.TenantCreate</em></a>) – An object containing the tenant data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller.delete_tenant">
+<span class="sig-name descname"><span class="pre">delete_tenant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantDelete" title="app.models.models.TenantDelete"><span class="pre">TenantDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller.delete_tenant" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a tenant from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.TenantDelete" title="app.models.models.TenantDelete"><em>models.TenantDelete</em></a>) – An object containing the tenant ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted tenant data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all tenants from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and tenant data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_handler.Tenant_Controller.update_tenant">
+<span class="sig-name descname"><span class="pre">update_tenant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantUpdate" title="app.models.models.TenantUpdate"><span class="pre">TenantUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_handler.Tenant_Controller.update_tenant" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing tenant in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.TenantUpdate" title="app.models.models.TenantUpdate"><em>models.TenantUpdate</em></a>) – An object containing the updated tenant data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated tenant data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.tenant_relationship_handler">
+<span id="tenant-relationship-handler"></span><h3>Tenant Relationship Handler<a class="headerlink" href="#module-app.controllers.tenant_relationship_handler" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.tenant_relationship_handler.</span></span><span class="sig-name descname"><span class="pre">Tenant_Relationship_Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller for managing tenant_relationship-related operations.</p>
+<p>This class handles the creation, updating, deletion, and retrieval of tenant_relationship in the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.create_tenant_relationship">
+<span class="sig-name descname"><span class="pre">create_tenant_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantRelationshipCreate" title="app.models.models.TenantRelationshipCreate"><span class="pre">TenantRelationshipCreate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.create_tenant_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new tenant_relationship in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<em>models.Tenant_RelationshipCreate</em>) – An object containing the tenant_relationship data to create.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and response data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.delete_tenant_relationship">
+<span class="sig-name descname"><span class="pre">delete_tenant_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantRelationshipDelete" title="app.models.models.TenantRelationshipDelete"><span class="pre">TenantRelationshipDelete</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.delete_tenant_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Deletes a tenant_relationship from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.TenantRelationshipDelete" title="app.models.models.TenantRelationshipDelete"><em>models.TenantRelationshipDelete</em></a>) – An object containing the tenant_relationship ID to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and deleted tenant_relationship data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.get_all" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves all tenant_relationship from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A response model with the status of the operation, message, and tenant_relationship data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.healthz">
+<span class="sig-name descname"><span class="pre">healthz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.healthz" title="Link to this definition">¶</a></dt>
+<dd><p>Checks the status of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the status “ok”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.update_tenant_relationship">
+<span class="sig-name descname"><span class="pre">update_tenant_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#app.models.models.TenantRelationshipUpdate" title="app.models.models.TenantRelationshipUpdate"><span class="pre">TenantRelationshipUpdate</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.tenant_relationship_handler.Tenant_Relationship_Controller.update_tenant_relationship" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an existing tenant_relationship in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>body</strong> (<a class="reference internal" href="models.html#app.models.models.TenantRelationshipUpdate" title="app.models.models.TenantRelationshipUpdate"><em>models.TenantRelationshipUpdate</em></a>) – An object containing the updated tenant_relationship data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A response model with the status of the operation, message, and updated tenant_relationship data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ResponseModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Nexus1</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Authentication Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Controllers Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints.html">Endpoints Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql.html">MySQL Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="auth.html" title="previous chapter">Authentication Module</a></li>
+      <li>Next: <a href="endpoints.html" title="next chapter">Endpoints Module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Manuel Garcés,Josu Igoa,Iker Perez,Carlos Gonzalez..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/controllers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
