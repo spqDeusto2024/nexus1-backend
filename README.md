@@ -50,7 +50,7 @@ Módulo que aloja el frontend del proyecto.
 
 ## Estructura de Proyecto (Visual)
 **IMAGEN**  
-*(Inserta aquí una imagen representativa de la estructura del proyecto, si es necesaria.)*
+*(TENGO QUE SUBIR IMAGEN)*
 
 ---
 
