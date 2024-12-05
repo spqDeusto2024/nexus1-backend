@@ -68,7 +68,7 @@ Módulo que aloja el frontend del proyecto.
     docker-compose down
 ### Frontend
 1. Construcción de la imagen y los contenedores:  
-   ``bash
+   ```bash
     docker-compose up --build
 2. Creacion de contenedores:
     ```bash
