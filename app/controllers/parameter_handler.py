@@ -47,7 +47,7 @@ class Parameter_Controller:
             ResponseModel: A response model with the status of the operation, message, and response data.
         """
         try:
-            body_row = mysql_models.Parameter(name=body.name, description=body.description)
+            body_row = mysql_models.Parameter(name=body.name, description=body.description, max_value=body.max_value, min_value=body.min_value)
             with Session(self.db.engine) as session:
                 session.add(body_row)
                 session.commit()

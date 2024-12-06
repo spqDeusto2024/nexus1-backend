@@ -168,6 +168,8 @@ class Parameter(Base):
         id (int): The unique identifier of the parameter.
         name (str): The name of the parameter.
         description (str): A description of the parameter.
+        max_value (float): The maximum value of the parameter for the room.
+        min_value (float): The minimum value of the parameter for the room.
         created_at (DateTime): The timestamp when the parameter record was created.
     """
 
@@ -175,6 +177,8 @@ class Parameter(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
     description = Column(String(255), unique=True, nullable=False)
+    max_value = Column(Float, nullable=False)
+    min_value = Column(Float, nullable=False)
     created_at = Column(DateTime, nullable=False,default=func.now())
 
     parameter_rooms = relationship("ParameterRoom", back_populates="parameter")

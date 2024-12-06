@@ -298,6 +298,8 @@ class ParameterBase(BaseModel):
     """
     name: str
     description: str
+    max_value: float
+    min_value: float
 
 class ParameterCreate(ParameterBase):
     """
