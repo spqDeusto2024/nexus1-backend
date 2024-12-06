@@ -50,7 +50,7 @@ Módulo que aloja el frontend del proyecto.
 
 ## Estructura de Proyecto (Visual)
 **IMAGEN**  
-![IMAGEN DE PROYECTO](https://imgur.com/a/awVXd72)
+![IMAGEN DE PROYECTO](https://i.imgur.com/YaTQnMl.png)
 
 ---
 
