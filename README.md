@@ -50,7 +50,7 @@ Módulo que aloja el frontend del proyecto.
 
 ## Estructura de Proyecto (Visual)
 **IMAGEN**  
-*(TENGO QUE SUBIR IMAGEN)*
+![IMAGEN DE PROYECTO](nexus_struct.png)
 
 ---
 

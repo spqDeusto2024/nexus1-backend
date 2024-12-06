@@ -25,3 +25,4 @@ source/_templates/
 # Otros archivos innecesarios
 .DS_Store
 Thumbs.db
+nexus_struct.png
