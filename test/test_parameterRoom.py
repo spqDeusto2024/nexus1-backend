@@ -20,7 +20,6 @@ def db_session():
     yield session
     session.close()
 
-
 def test_healthz():
     """
     Prueba el endpoint de salud.
@@ -29,7 +28,6 @@ def test_healthz():
     controller = ParameterRoom_Controller(db)
     result = controller.healthz()
     assert result == {"status": "ok"}
-
 
 def test_create_parameterRoom(db_session):
     """
@@ -41,33 +39,47 @@ def test_create_parameterRoom(db_session):
     parameter_controller = Parameter_Controller(db)
     shelter_controller = Shelter_Controller(db)
 
-    #CREO EL PARAMETRO
-    parameter_data = models.ParameterCreate(name="paremtert_testing", description="paramter_paraemter_room_testing",created_at = datetime.now())
+    # Crear un parámetro
+    parameter_data = models.ParameterCreate(
+        name="parameter_testing",
+        description="parameter for parameter_room testing",
+        max_value=100.0,
+        min_value=0.0,
+        created_at=datetime.now()
+    )
     response_parameter = parameter_controller.create_parameter(parameter_data)
 
-    #CREO EL SHLETER PARA EL ROOM
-    shelter_data = models.ShelterCreate(name="New Shedescriptionlter", description="proving shelter",created_at = datetime.now())
+    # Crear un shelter
+    shelter_data = models.ShelterCreate(
+        name="Test Shelter",
+        description="Shelter for room testing",
+        created_at=datetime.now()
+    )
     response_shelter = shelter_controller.create_shelter(shelter_data)
 
-    #CREO EL ROOM
-    room_data = models.RoomCreate(id_shelter = response_shelter.data.id ,name = "test_shelter",created_at = datetime.now())
+    # Crear un room asociado al shelter
+    room_data = models.RoomCreate(
+        id_shelter=response_shelter.data.id,
+        name="test_room",
+        capacity=5,
+        created_at=datetime.now()
+    )
     response_room = room_controller.create_room(room_data)
 
-
-
+    # Crear un `ParameterRoom`
     parameterRoom_data = models.ParameterRoomCreate(
         id_room=response_room.data.id,
         id_parameter=response_parameter.data.id,
         date=datetime.now(),
         value=6.9,
-        created_at = datetime.now()
+        created_at=datetime.now()
     )
     response = controller.create_parameterRoom(parameterRoom_data)
 
     assert response.status == "ok"
     assert response.code == 201
     assert response.message == "ParameterRoom inserted into database successfully"
-
+    assert response.data.value == 6.9
 
 def test_get_all_parameterRooms(db_session):
     """
@@ -75,95 +87,125 @@ def test_get_all_parameterRooms(db_session):
     """
     db = TestDataBase("mysql://test:test@test-database:3306/test")
     controller = ParameterRoom_Controller(db)
+
+    # Obtener todos los `ParameterRooms`
     response = controller.get_all()
+
     assert response.status == "ok"
     assert response.code == 200
     assert isinstance(response.data, list)
-    assert len(response.data) > 0  # Se espera que haya al menos un registro
-
+    assert len(response.data) > 0  # Se espera al menos un registro
 
 def test_update_parameterRoom(db_session):
+    """
+    Prueba la actualización de un `ParameterRoom`.
+    """
     db = TestDataBase("mysql://test:test@test-database:3306/test")
     controller = ParameterRoom_Controller(db)
     room_controller = Room_Controller(db)
     parameter_controller = Parameter_Controller(db)
     shelter_controller = Shelter_Controller(db)
 
-    #CREO EL PARAMETRO
-    parameter_data = models.ParameterCreate(name="Test_parameter_update", description="A parameter for testing_update",created_at = datetime.now())
+    # Crear un parámetro
+    parameter_data = models.ParameterCreate(
+        name="parameter_to_update",
+        description="parameter for updating",
+        max_value=50.0,
+        min_value=10.0,
+        created_at=datetime.now()
+    )
     response_parameter = parameter_controller.create_parameter(parameter_data)
 
-    #CREO EL SHLETER PARA EL ROOM
-    shelter_data = models.ShelterCreate(name="New shelter update_3", description="A new shelter update_3",created_at = datetime.now())
+    # Crear un shelter
+    shelter_data = models.ShelterCreate(
+        name="Update Shelter",
+        description="Shelter for updating room",
+        created_at=datetime.now()
+    )
     response_shelter = shelter_controller.create_shelter(shelter_data)
 
-    #CREO EL ROOM
-    room_data = models.RoomCreate(id_shelter = response_shelter.data.id ,name = "test_room update",created_at = datetime.now())
+    # Crear un room asociado al shelter
+    room_data = models.RoomCreate(
+        id_shelter=response_shelter.data.id,
+        name="update_room",
+        capacity=3,
+        created_at=datetime.now()
+    )
     response_room = room_controller.create_room(room_data)
 
-
-
+    # Crear un `ParameterRoom`
     parameterRoom_data = models.ParameterRoomCreate(
         id_room=response_room.data.id,
         id_parameter=response_parameter.data.id,
         date=datetime.now(),
         value=8.3,
-        created_at = datetime.now()
+        created_at=datetime.now()
     )
-    response = controller.create_parameterRoom(parameterRoom_data)
+    response_create = controller.create_parameterRoom(parameterRoom_data)
 
-    # Actualiza el `ParameterRoom`
+    # Actualizar el `ParameterRoom`
     updated_data = models.ParameterRoomUpdate(
-        id=response.data.id,
+        id=response_create.data.id,
         id_room=response_room.data.id,
         id_parameter=response_parameter.data.id,
         date=datetime.now(),
-        value=53.2
+        value=20.5
     )
     response = controller.update_parameterRoom(updated_data)
 
     assert response.status == "ok"
     assert response.code == 200
     assert response.message == "ParameterRoom successfully updated"
-    # assert response.data.value == 53.2
-
 
 def test_delete_parameterRoom(db_session):
     """
     Prueba la eliminación de un `ParameterRoom`.
     """
-    # Crea un `ParameterRoom` inicial para eliminar
     db = TestDataBase("mysql://test:test@test-database:3306/test")
     controller = ParameterRoom_Controller(db)
     room_controller = Room_Controller(db)
     parameter_controller = Parameter_Controller(db)
     shelter_controller = Shelter_Controller(db)
 
-    #CREO EL PARAMETRO
-    parameter_data = models.ParameterCreate(name="Test Parameter_delete", description="A parameter for testing_delete",created_at = datetime.now())
+    # Crear un parámetro
+    parameter_data = models.ParameterCreate(
+        name="parameter_to_delete",
+        description="parameter for deletion",
+        max_value=100.0,
+        min_value=0.0,
+        created_at=datetime.now()
+    )
     response_parameter = parameter_controller.create_parameter(parameter_data)
 
-    #CREO EL SHLETER PARA EL ROOM
-    shelter_data = models.ShelterCreate(name="New Shedescriptionlter_delete", description="A new shelter_delete",created_at = datetime.now())
+    # Crear un shelter
+    shelter_data = models.ShelterCreate(
+        name="Delete Shelter",
+        description="Shelter for deletion",
+        created_at=datetime.now()
+    )
     response_shelter = shelter_controller.create_shelter(shelter_data)
 
-    #CREO EL ROOM
-    room_data = models.RoomCreate(id_shelter = response_shelter.data.id ,name = "test_shelter_delete",created_at = datetime.now())
+    # Crear un room asociado al shelter
+    room_data = models.RoomCreate(
+        id_shelter=response_shelter.data.id,
+        name="delete_room",
+        capacity=10,
+        created_at=datetime.now()
+    )
     response_room = room_controller.create_room(room_data)
 
-
-
+    # Crear un `ParameterRoom`
     parameterRoom_data = models.ParameterRoomCreate(
         id_room=response_room.data.id,
         id_parameter=response_parameter.data.id,
         date=datetime.now(),
-        value=63.0,
-        created_at = datetime.now()
+        value=99.9,
+        created_at=datetime.now()
     )
-    response = controller.create_parameterRoom(parameterRoom_data)
+    response_create = controller.create_parameterRoom(parameterRoom_data)
 
-    # Elimina el `ParameterRoom`
-    delete_data = models.ParameterRoomDelete(id=response.data.id)
+    # Eliminar el `ParameterRoom`
+    delete_data = models.ParameterRoomDelete(id=response_create.data.id)
     response = controller.delete_parameterRoom(delete_data)
 
     assert response.status == "ok"

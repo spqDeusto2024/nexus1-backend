@@ -154,6 +154,8 @@ class Parameter_Controller:
                 if parameter:
                     parameter.name = body.name
                     parameter.description = body.description
+                    parameter.max_value = body.max_value
+                    parameter.min_value = body.min_value
                     session.commit()
                     return ResponseModel(
                         status="ok",
