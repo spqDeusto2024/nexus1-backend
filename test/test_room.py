@@ -30,8 +30,8 @@ def test_create_room(db_session):
 
     # Crear un shelter para asociarlo con el room
     shelter_data = models.ShelterCreate(
-        name="Test Shelter",
-        description="Shelter for room testing",
+        name="Test Shelter de Carlos Gonzalez",
+        description="Shelter for room testing for Carlos",
         created_at=datetime.now()
     )
     response_shelter = shelter_controller.create_shelter(shelter_data)
