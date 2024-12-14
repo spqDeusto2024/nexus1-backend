@@ -56,6 +56,16 @@ class Nexus1DataBase():
         """
         
         session = self.Session()
+        try:
+            if not session.query(Administrator).first():
+                admin = Administrator(username = "root",password = hash_password("root"))
+                session.add(admin)
+                session.commit()
+        except Exception as e:
+            raise e
+
+
+
         # Verificar e insertar en la tabla Shelter
         if not session.query(Shelter).first():
             shelter = Shelter(name="Default Shelter", description="This is the default shelter.")
@@ -139,7 +149,7 @@ class Nexus1DataBase():
                 id_room=session.query(Room.id).first()[0],
                 id_parameter=session.query(Parameter.id).first()[0],
                 date=func.now(),
-                value = 120.0
+                value = 70.0
             )
             session.add(parameter_room)
             session.commit()
@@ -154,10 +164,7 @@ class Nexus1DataBase():
             session.add(tenant_relationship)
             session.commit()
         
-        if not session.query(Administrator).first():
-            admin = Administrator(username = "root",password = hash_password("root"))
-            session.add(admin)
-            session.commit()
+       
 
         print("Database preparation complete: all tables have at least one record.")
 
