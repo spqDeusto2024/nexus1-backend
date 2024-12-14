@@ -56,6 +56,7 @@ Módulo que aloja el frontend del proyecto.
 
 ## Pasos para la Ejecución
 
+
 ### Backend
 1. Construcción de la imagen:  
    ```bash
@@ -76,5 +77,11 @@ Módulo que aloja el frontend del proyecto.
 3. Eliminar contenedores:
     ```bash
     docker-compose down
+
+### Administrador por defecto
+    Usuario: root
+    Contraseña: root
+### Crear Administrador 
+    http://127.0.0.1:8000/docs, create_Administrator sin token de verificacion.
 
 
