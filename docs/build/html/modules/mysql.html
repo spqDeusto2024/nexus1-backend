@@ -247,6 +247,28 @@
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.max_value">
+<span class="sig-name descname"><span class="pre">max_value</span></span><a class="headerlink" href="#app.mysql.models.Parameter.max_value" title="Link to this definition">¶</a></dt>
+<dd><p>The maximum value of the parameter for the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.mysql.models.Parameter.min_value">
+<span class="sig-name descname"><span class="pre">min_value</span></span><a class="headerlink" href="#app.mysql.models.Parameter.min_value" title="Link to this definition">¶</a></dt>
+<dd><p>The minimum value of the parameter for the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="app.mysql.models.Parameter.created_at">
 <span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#app.mysql.models.Parameter.created_at" title="Link to this definition">¶</a></dt>
 <dd><p>The timestamp when the parameter record was created.</p>
@@ -851,6 +873,17 @@ before,and if it does not exists,this function creates all tables on the databas
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.mysql.mysql.Nexus1DataBase.prepare_database">
+<span class="sig-name descname"><span class="pre">prepare_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.mysql.Nexus1DataBase.prepare_database" title="Link to this definition">¶</a></dt>
+<dd><p>Garantiza que todas las tablas tengan al menos un registro.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – Sesión de SQLAlchemy para interactuar con la base de datos.</p>
 </dd>
 </dl>
 </dd></dl>
